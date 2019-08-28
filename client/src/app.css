@@ -1,0 +1,15 @@
+.input-container {
+  position: absolute;
+  background: white;
+  margin: 24px;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
+  z-index: 1994;
+}
+
+.map-container {
+  height: 100%;
+  width: 100%;
+  background-color: aquamarine;
+}
