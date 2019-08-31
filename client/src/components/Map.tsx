@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import ReactMapGL, { Marker, GeolocateControl } from "react-map-gl";
 
 import { useDebouncedCallback } from "../hooks";
+import { Place } from "../App";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -22,7 +23,13 @@ const pinStyle = {
   stroke: "none"
 };
 
-export default function Map({ places, setCoordinatinates }: any) {
+type Props = {
+  places: Array<Place>;
+  // setCoordinatinates: (newLat: Float32Array, newLon: Float32Array) => void;
+  setCoordinatinates: (...args: any) => void;
+};
+
+export default function Map({ places, setCoordinatinates }: Props) {
   const [viewport, setViewport] = useState({
     latitude: 47.4979,
     longitude: 19.05465,

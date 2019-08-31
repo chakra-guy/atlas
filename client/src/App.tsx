@@ -3,15 +3,18 @@ import React, { useState, useEffect } from "react";
 import { Map } from "./components";
 import "./app.css";
 
-interface Place {
+export type Place = {
   id: number;
   name: string;
   lat: Float32Array;
   lon: Float32Array;
-}
+};
 
 const baseURL = "http://localhost:4000/api/place";
 // const baseURL = "http://192.168.1.242:4000/api/place";
+
+// TODO add ESLint
+// TODO add proper types
 
 export default function App() {
   const [lat, setLat] = useState(47.497903);
@@ -25,6 +28,11 @@ export default function App() {
       .then(({ data }) => setPlaces(data));
   }, [lat, lon, distance]);
 
+  function setCoordinatinates(newLat: Float32Array, newLon: Float32Array) {
+    setLat(+newLat);
+    setLon(+newLon);
+  }
+
   return (
     <>
       <div className="input-container">
@@ -32,17 +40,11 @@ export default function App() {
         <input
           type="text"
           value={distance}
-          onChange={e => setDistance(Number(e.target.value))}
+          onChange={e => setDistance(+e.target.value)}
         />
       </div>
       <div className="map-container">
-        <Map
-          places={places}
-          setCoordinatinates={(newLat: any, newLon: any) => {
-            setLat(newLat);
-            setLon(newLon);
-          }}
-        />
+        <Map places={places} setCoordinatinates={setCoordinatinates} />
       </div>
     </>
   );
