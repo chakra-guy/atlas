@@ -23,6 +23,11 @@ const pinStyle = {
   stroke: "none",
 }
 
+type Props = {
+  places: Array<Place>
+  setCoordinatinates: (a: number, b: number) => void
+}
+
 export default function Map({ places, setCoordinatinates }: Props): JSX.Element {
   const [viewport, setViewport] = useState({
     latitude: 47.4979,
@@ -34,8 +39,8 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
 
   const handleUpdate = useDebouncedCallback(setCoordinatinates, 250)
 
-  const handleViewportChange: ViewportChangeHandler = vp => {
-    setViewport(state => ({ ...state, ...vp }))
+  const handleViewportChange: ViewportChangeHandler = viewState => {
+    setViewport(state => ({ ...state, ...viewState }))
     handleUpdate(viewport.latitude, viewport.longitude)
   }
 
@@ -49,7 +54,7 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
       {...viewport}
     >
       {places.length > 0 &&
-        places.map((place: Place) => (
+        places.map(place => (
           <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
             <svg
               height={20}
@@ -73,9 +78,4 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
       />
     </ReactMapGL>
   )
-}
-
-type Props = {
-  places: Array<Place>
-  setCoordinatinates: (a: number, b: number) => void
 }

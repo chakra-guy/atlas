@@ -25,15 +25,15 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "import", "jest", "react", "react-hooks", "prettier"],
   rules: {
-    // "@typescript-eslint/explicit-function-return-type": [
-    //   "error",
-    //   {
-    //     allowExpressions: true,
-    //     allowTypedFunctionExpressions: true,
-    //   },
-    // ],
-    "@typescript-eslint/explicit-member-accessibility": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true,
+      },
+    ],
+    // "@typescript-eslint/explicit-member-accessibility": "off",
+    // "@typescript-eslint/explicit-function-return-type": "off",
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": ["error", { extensions: [".jsx", ".tsx"] }],
