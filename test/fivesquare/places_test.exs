@@ -6,8 +6,22 @@ defmodule Fivesquare.PlacesTest do
   describe "places" do
     alias Fivesquare.Places.Place
 
-    @valid_attrs %{lat: 120.5, logo: "some logo", lon: 120.5, name: "some name", rating: 120.5, website: "some website"}
-    @update_attrs %{lat: 456.7, logo: "some updated logo", lon: 456.7, name: "some updated name", rating: 456.7, website: "some updated website"}
+    @valid_attrs %{
+      lat: 120.5,
+      logo: "some logo",
+      lon: 120.5,
+      name: "some name",
+      rating: 120.5,
+      website: "some website"
+    }
+    @update_attrs %{
+      lat: 456.7,
+      logo: "some updated logo",
+      lon: 456.7,
+      name: "some updated name",
+      rating: 456.7,
+      website: "some updated website"
+    }
     @invalid_attrs %{lat: nil, logo: nil, lon: nil, name: nil, rating: nil, website: nil}
 
     def place_fixture(attrs \\ %{}) do

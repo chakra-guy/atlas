@@ -7,5 +7,7 @@ defmodule FivesquareWeb.Router do
 
   scope "/api", FivesquareWeb do
     pipe_through :api
+
+    resources "/places", PlaceController, except: [:new, :edit]
   end
 end

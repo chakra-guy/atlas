@@ -17,6 +17,6 @@ defmodule Fivesquare.Places.Place do
   def changeset(place, attrs) do
     place
     |> cast(attrs, [:name, :rating, :logo, :website, :lat, :lon])
-    |> validate_required([:name, :rating, :logo, :website, :lat, :lon])
+    |> validate_required([:name])
   end
 end

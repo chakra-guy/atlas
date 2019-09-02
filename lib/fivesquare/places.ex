@@ -9,6 +9,29 @@ defmodule Fivesquare.Places do
   alias Fivesquare.Places.Place
 
   @doc """
+  Returns the list of places based on the geolocation and distance.
+
+  """
+
+  def list_places(%{"lat" => lat, "lon" => lon, "distance" => distance}) do
+    safeLat = String.to_float(lat)
+    safeLon = String.to_float(lon)
+    safeDis = String.to_integer(distance)
+
+    Repo.all(
+      from p in Place,
+        where:
+          fragment(
+            "ST_Distance_Sphere(ST_MakePoint(?,?), ST_MakePoint(?,?))",
+            p.lon,
+            p.lat,
+            ^safeLon,
+            ^safeLat
+          ) <= ^safeDis
+    )
+  end
+
+  @doc """
   Returns the list of places.
 
   ## Examples
