@@ -3,10 +3,6 @@ import React, { useState, useEffect } from "react"
 import { Map } from "./components"
 import "./app.css"
 
-// TODO add proper types to useDebouncedCallback()
-// TODO test debounced setCoordinatinates()
-// TODO figure out what to do with "explicit-function-return-type" rule
-
 export type Place = {
   id: number
   name: string
