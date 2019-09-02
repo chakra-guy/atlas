@@ -1,5 +1,10 @@
 import React, { useState } from "react"
-import ReactMapGL, { Marker, GeolocateControl, ViewportChangeHandler } from "react-map-gl"
+import ReactMapGL, {
+  Marker,
+  GeolocateControl,
+  ViewportChangeHandler,
+  ViewState,
+} from "react-map-gl"
 
 import { useDebouncedCallback } from "../hooks"
 import { Place } from "../App"
@@ -21,27 +26,28 @@ const pinStyle = {
   cursor: "pointer",
   fill: "#d00",
   stroke: "none",
+  transform: "translate(-10px, -20px)",
 }
 
 type Props = {
   places: Array<Place>
-  setCoordinatinates: (a: number, b: number) => void
+  setCoordinatinates: (lat: number, lon: number) => void
 }
 
 export default function Map({ places, setCoordinatinates }: Props): JSX.Element {
-  const [viewport, setViewport] = useState({
+  const [viewport, setViewport] = useState<ViewState>({
     latitude: 47.4979,
     longitude: 19.05465,
     zoom: 16,
-    height: 400,
-    width: 400,
+    // height: 400,
+    // width: 400,
   })
 
-  const handleUpdate = useDebouncedCallback(setCoordinatinates, 250)
+  const updateCoordinatinates = useDebouncedCallback(setCoordinatinates, 250)
 
   const handleViewportChange: ViewportChangeHandler = viewState => {
     setViewport(state => ({ ...state, ...viewState }))
-    handleUpdate(viewport.latitude, viewport.longitude)
+    updateCoordinatinates(viewState.latitude, viewState.longitude)
   }
 
   return (
@@ -59,10 +65,7 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
             <svg
               height={20}
               viewBox="0 0 24 24"
-              style={{
-                ...pinStyle,
-                transform: `translate(${-20 / 2}px,${-20}px)`,
-              }}
+              style={pinStyle}
               onClick={() => console.log("place", place.name)}
             >
               <path d={ICON} />
