@@ -40,5 +40,7 @@ defmodule FivesquareWeb.Endpoint do
     key: "_fivesquare_key",
     signing_salt: "/moKEvR4"
 
+  plug CORSPlug, origin: ["http://localhost:3000"]
+
   plug FivesquareWeb.Router
 end

@@ -7,4 +7,7 @@
 # API
 
 - [ ] remove @default_place from PlaceController
+- [ ] better index/2 route for PlaceController
 - [ ] better type conversion for Places.list_places/1
+- [ ] find better geo query for list_places/1
+- [ ] fix CORS
