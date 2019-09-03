@@ -1,0 +1,25 @@
+.marker {
+  cursor: pointer;
+  fill: #d00;
+  stroke: none;
+  transform: translate(-10px, -20px);
+}
+
+.popup {
+  .mapboxgl-popup-content {
+    display: flex;
+    width: 240px;
+    height: 120px;
+  }
+
+  img {
+    max-width: 160px;
+  }
+
+  .popup-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 12px;
+  }
+}

@@ -11,22 +11,18 @@ export type Place = {
 }
 
 export default function App(): JSX.Element {
-  const [lat, setLat] = useState(47.497903)
-  const [lon, setLon] = useState(19.054647)
-  const [distance, setDistance] = useState(150)
+  const [geo, setGeo] = useState({ lat: 47.497903, lon: 19.054647 })
+  const [distance, setDistance] = useState(250)
   const [places, setPlaces] = useState<Array<Place>>([])
 
   useEffect(() => {
-    const baseURL = "http://localhost:4000/api/place"
-    fetch(`${baseURL}?lat=${lat}&lon=${lon}&distance=${distance}`)
+    const baseURL = "http://localhost:4000/api"
+    fetch(
+      `${baseURL}/places?place[lat]=${geo.lat}&place[lon]=${geo.lon}&place[distance]=${distance}`,
+    )
       .then(response => response.json())
       .then(({ data }) => setPlaces(data))
-  }, [lat, lon, distance])
-
-  function setCoordinatinates(newLat: number, newLon: number): void {
-    setLat(+newLat)
-    setLon(+newLon)
-  }
+  }, [geo, distance])
 
   return (
     <>
@@ -35,7 +31,10 @@ export default function App(): JSX.Element {
         <input type="text" value={distance} onChange={e => setDistance(+e.target.value)} />
       </div>
       <div className="map-container">
-        <Map places={places} setCoordinatinates={setCoordinatinates} />
+        <Map
+          places={places}
+          setCoordinatinates={(lat: number, lon: number) => setGeo({ lat, lon })}
+        />
       </div>
     </>
   )

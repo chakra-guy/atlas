@@ -3,6 +3,7 @@
 - [ ] add proper types to useDebouncedCallback()
 - [ ] test debounced setCoordinatinates()
 - [ ] figure out what to do with "explicit-function-return-type" rule
+- [ ] add styling to <GeolocateControl />
 
 # API
 
