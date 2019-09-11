@@ -25,6 +25,14 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :fivesquare, FivesquareWeb.Guardian,
+  issuer: "fivesquare",
+  secret_key: "Jl30rzrYMklaDTet6t/Oxfn7v95/2QBgqoHMVP/1P7FSPKelyfWD/e71fIhcQSd8"
+
+# serializer: Fivesquare.GuardianSerializer
+# TODO mix guardian.gen.secret
+# secret_key: Mix.env(),
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

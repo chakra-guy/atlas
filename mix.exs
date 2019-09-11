@@ -20,7 +20,7 @@ defmodule Fivesquare.MixProject do
   def application do
     [
       mod: {Fivesquare.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:guardian, :logger, :runtime_tools]
     ]
   end
 
@@ -42,7 +42,9 @@ defmodule Fivesquare.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:csv, "~> 2.3"},
-      {:cors_plug, "~> 2.0"}
+      {:cors_plug, "~> 2.0"},
+      {:pbkdf2_elixir, "~> 1.0"},
+      {:guardian, "~> 2.0"}
     ]
   end
 
