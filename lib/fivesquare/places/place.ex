@@ -2,6 +2,8 @@ defmodule Fivesquare.Places.Place do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Fivesquare.Places.Review
+
   schema "places" do
     field :lat, :float
     field :logo, :string
@@ -9,6 +11,8 @@ defmodule Fivesquare.Places.Place do
     field :name, :string
     field :rating, :float
     field :website, :string
+
+    # has_many :review, Review
 
     timestamps()
   end

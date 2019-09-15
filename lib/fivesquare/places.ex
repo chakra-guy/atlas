@@ -55,4 +55,34 @@ defmodule Fivesquare.Places do
   def get_place_changeset(%Place{} = place) do
     Place.changeset(place, %{})
   end
+
+  alias Fivesquare.Places.Review
+
+  def list_reviews do
+    Repo.all(Review)
+  end
+
+  def get_review!(id) do
+     Repo.get!(Review, id)
+  end
+
+  def create_review(attrs \\ %{}) do
+    %Review{}
+    |> Review.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_review(%Review{} = review, attrs) do
+    review
+    |> Review.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_review(%Review{} = review) do
+    Repo.delete(review)
+  end
+
+  def get_review_changeset(%Review{} = review) do
+    Review.changeset(review, %{})
+  end
 end

@@ -2,10 +2,14 @@ defmodule Fivesquare.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Fivesquare.Places.Review
+
   schema "users" do
     field :username, :string
     field :password_hash, :string
     field :password, :string, virtual: true
+
+    # has_many :review, Review
 
     timestamps()
   end
@@ -15,6 +19,7 @@ defmodule Fivesquare.Accounts.User do
     |> cast(attrs, [:username])
     |> validate_required([:username])
     |> validate_length(:username, min: 3, max: 20)
+    |> unique_constraint(:username)
   end
 
   def signup_changeset(user, params) do

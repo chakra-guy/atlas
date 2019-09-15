@@ -85,4 +85,67 @@ defmodule Fivesquare.PlacesTest do
       assert %Ecto.Changeset{} = Places.get_place_changeset(place)
     end
   end
+
+  describe "reviews" do
+    alias Fivesquare.Places.Review
+
+    @valid_attrs %{image_url: "some image_url", rating: 42, text: "some text"}
+    @update_attrs %{image_url: "some updated image_url", rating: 43, text: "some updated text"}
+    @invalid_attrs %{image_url: nil, rating: nil, text: nil}
+
+    def review_fixture(attrs \\ %{}) do
+      {:ok, review} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Places.create_review()
+
+      review
+    end
+
+    test "list_reviews/0 returns all reviews" do
+      review = review_fixture()
+      assert Places.list_reviews() == [review]
+    end
+
+    test "get_review!/1 returns the review with given id" do
+      review = review_fixture()
+      assert Places.get_review!(review.id) == review
+    end
+
+    test "create_review/1 with valid data creates a review" do
+      assert {:ok, %Review{} = review} = Places.create_review(@valid_attrs)
+      assert review.image_url == "some image_url"
+      assert review.rating == 42
+      assert review.text == "some text"
+    end
+
+    test "create_review/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Places.create_review(@invalid_attrs)
+    end
+
+    test "update_review/2 with valid data updates the review" do
+      review = review_fixture()
+      assert {:ok, %Review{} = review} = Places.update_review(review, @update_attrs)
+      assert review.image_url == "some updated image_url"
+      assert review.rating == 43
+      assert review.text == "some updated text"
+    end
+
+    test "update_review/2 with invalid data returns error changeset" do
+      review = review_fixture()
+      assert {:error, %Ecto.Changeset{}} = Places.update_review(review, @invalid_attrs)
+      assert review == Places.get_review!(review.id)
+    end
+
+    test "delete_review/1 deletes the review" do
+      review = review_fixture()
+      assert {:ok, %Review{}} = Places.delete_review(review)
+      assert_raise Ecto.NoResultsError, fn -> Places.get_review!(review.id) end
+    end
+
+    test "change_review/1 returns a review changeset" do
+      review = review_fixture()
+      assert %Ecto.Changeset{} = Places.change_review(review)
+    end
+  end
 end
