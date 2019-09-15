@@ -2,8 +2,6 @@ defmodule Fivesquare.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {Jason.Encoder, only: [:username, :password]}
-
   schema "users" do
     field :username, :string
     field :password_hash, :string
@@ -14,7 +12,6 @@ defmodule Fivesquare.Accounts.User do
 
   def changeset(user, attrs) do
     user
-    # FIXME downcase username
     |> cast(attrs, [:username])
     |> validate_required([:username])
     |> validate_length(:username, min: 3, max: 20)

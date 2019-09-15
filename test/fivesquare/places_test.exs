@@ -80,9 +80,9 @@ defmodule Fivesquare.PlacesTest do
       assert_raise Ecto.NoResultsError, fn -> Places.get_place!(place.id) end
     end
 
-    test "change_place/1 returns a place changeset" do
+    test "get_place_changeset/1 returns a place changeset" do
       place = place_fixture()
-      assert %Ecto.Changeset{} = Places.change_place(place)
+      assert %Ecto.Changeset{} = Places.get_place_changeset(place)
     end
   end
 end

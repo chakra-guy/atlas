@@ -13,7 +13,7 @@ defmodule FivesquareWeb.SessionController do
 
         conn
         |> put_status(:created)
-        |> render("show.json", jwt: jwt, user: user)
+        |> render("show.json", %{jwt: jwt, user: user})
 
       {:error, _reason} ->
         conn

@@ -16,7 +16,6 @@ defmodule FivesquareWeb.Router do
     post "/login", SessionController, :create
     post "/logout", SessionController, :delete
 
-    # resources "/users", UserController, except: [:new, :edit]
     resources "/sessions", SessionController, only: [:create, :delete]
   end
 

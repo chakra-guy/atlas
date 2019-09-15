@@ -32,7 +32,7 @@ defmodule Fivesquare.Accounts do
     Repo.delete(user)
   end
 
-  def change_user(%User{} = user) do
+  def get_user_changeset(%User{} = user) do
     User.changeset(user, %{})
   end
 
@@ -50,7 +50,7 @@ defmodule Fivesquare.Accounts do
         {:ok, user}
 
       user ->
-        {:error, :invalid_credentials}
+        {:error, :not_found}
 
       true ->
         Pbkdf2.no_user_verify()

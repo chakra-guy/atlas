@@ -15,20 +15,20 @@ defmodule FivesquareWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    # FIXME create -> <- sign_up ???
     case Accounts.signup_user(user_params) do
       {:ok, %User{} = user} ->
         {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
 
         conn
         |> put_status(:created)
-        |> render(SessionView, "show.json", jwt: jwt, user: user)
+        |> put_view(SessionView)
+        |> render( "show.json", %{jwt: jwt, user: user})
 
       {:error, _reason} ->
         conn
         |> put_status(:unprocessable_entity)
-        # FIXME display changeset error messages
-        |> render(SessionView, "error.json")
+        |> put_view(SessionView)
+        |> render("error.json")
     end
   end
 

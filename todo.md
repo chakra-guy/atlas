@@ -12,3 +12,7 @@
 - [ ] better type conversion for Places.list_places/1
 - [ ] find better geo query for list_places/1
 - [ ] fix CORS
+- [ ] use email instead of username
+- [ ] display changeset error for FivesquareWeb.UserController.create/2
+- [ ] signup/ for user controller, but login/ logout. ofr sesion controller?
+- [ ] login/ signup/ both :create functions

@@ -4,6 +4,6 @@ defmodule FivesquareWeb.Guardian.AuthPipeline do
     module: FivesquareWeb.Guardian,
     error_handler: FivesquareWeb.Guardian.AuthErrorHandler
 
-  plug Guardian.Plug.VerifyHeader
+  plug Guardian.Plug.VerifyHeader, realm: "Bearer"
   plug Guardian.Plug.EnsureAuthenticated
 end

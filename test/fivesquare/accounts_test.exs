@@ -61,9 +61,9 @@ defmodule Fivesquare.AccountsTest do
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
     end
 
-    test "change_user/1 returns a user changeset" do
+    test "get_user_changeset/1 returns a user changeset" do
       user = user_fixture()
-      assert %Ecto.Changeset{} = Accounts.change_user(user)
+      assert %Ecto.Changeset{} = Accounts.get_user_changeset(user)
     end
   end
 end
