@@ -3,6 +3,7 @@ defmodule Fivesquare.Places do
   alias Fivesquare.Repo
 
   alias Fivesquare.Places.Place
+  alias Fivesquare.Places.Review
 
   defmacro distance_between(a_lon, a_lat, b_lon, b_lat) do
     quote do
@@ -15,6 +16,10 @@ defmodule Fivesquare.Places do
       )
     end
   end
+
+
+
+  # PLACES 
 
   # Returns the list of places based on the geolocation and distance.
   def list_places(%{"lat" => lat, "lon" => lon, "distance" => distance}) do
@@ -56,7 +61,9 @@ defmodule Fivesquare.Places do
     Place.changeset(place, %{})
   end
 
-  alias Fivesquare.Places.Review
+
+
+  # REVIEWS
 
   def list_reviews do
     Repo.all(Review)
@@ -64,6 +71,10 @@ defmodule Fivesquare.Places do
 
   def get_review!(id) do
      Repo.get!(Review, id)
+  end
+
+  def get_review_by(params) do
+    Repo.get_by(Review, params)
   end
 
   def create_review(attrs \\ %{}) do
