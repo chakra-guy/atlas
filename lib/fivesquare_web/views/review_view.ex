@@ -16,8 +16,8 @@ defmodule FivesquareWeb.ReviewView do
       image_url: review.image_url,
       rating: review.rating,
       text: review.text,
-      user_id: review.user.id,
-      place_id: review.place.id
+      user_id: review.user_id,
+      place_id: review.place_id
     }
   end
 end

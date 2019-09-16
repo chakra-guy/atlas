@@ -62,16 +62,37 @@ defmodule Fivesquare.Places do
   # REVIEWS
 
   def list_reviews do
-    Review
+    Repo.all(Review)
+  end
+
+  def list_reviews_by_user_and_place(user_id, place_id) do
+    query =
+      from r in Review,
+        left_join: u in assoc(r, :user),
+        left_join: p in assoc(r, :place),
+        where: u.id == ^user_id and p.id == ^place_id,
+        select: r
+
+    Repo.all(query)
+  end
+
+  def list_reviews_by_place(place_id) do
+    query =
+      from r in Review,
+        left_join: p in assoc(r, :place),
+        where: p.id == ^place_id,
+        select: r
+
+    query
     |> Repo.all()
-    |> Repo.preload([:user, :place])
+    |> Repo.preload([:user])
   end
 
   def get_review!(id) do
     Repo.get!(Review, id)
   end
 
-  def get_review_by(params) do
+  def get_review_by(params \\ %{}) do
     Repo.get_by(Review, params)
   end
 

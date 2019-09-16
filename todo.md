@@ -17,3 +17,4 @@
 - [ ] signup/ for user controller, but login/ logout. ofr sesion controller?
 - [ ] login/ signup/ both :create functions
 - [ ] add `has_many :review, Review` ?
+- [ ] compose list_reviews_by_user/place queries

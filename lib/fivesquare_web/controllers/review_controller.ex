@@ -6,6 +6,16 @@ defmodule FivesquareWeb.ReviewController do
 
   action_fallback FivesquareWeb.FallbackController
 
+  def index(conn, %{"review" => %{"user_id" => user_id, "place_id" => place_id}}) do
+    reviews = Places.list_reviews_by_user_and_place(user_id, place_id)
+    render(conn, "index.json", reviews: reviews)
+  end
+
+  def index(conn, %{"review" => %{"place_id" => place_id}}) do
+    reviews = Places.list_reviews_by_place(place_id)
+    render(conn, "index.json", reviews: reviews)
+  end
+
   def index(conn, _params) do
     reviews = Places.list_reviews()
     render(conn, "index.json", reviews: reviews)
