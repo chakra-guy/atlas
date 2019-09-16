@@ -17,9 +17,7 @@ defmodule Fivesquare.Places do
     end
   end
 
-
-
-  # PLACES 
+  # PLACES
 
   # Returns the list of places based on the geolocation and distance.
   def list_places(%{"lat" => lat, "lon" => lon, "distance" => distance}) do
@@ -61,16 +59,16 @@ defmodule Fivesquare.Places do
     Place.changeset(place, %{})
   end
 
-
-
   # REVIEWS
 
   def list_reviews do
-    Repo.all(Review)
+    Review
+    |> Repo.all()
+    |> Repo.preload([:user, :place])
   end
 
   def get_review!(id) do
-     Repo.get!(Review, id)
+    Repo.get!(Review, id)
   end
 
   def get_review_by(params) do
