@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :fivesquare,
-  ecto_repos: [Fivesquare.Repo]
+config :atlas,
+  ecto_repos: [Atlas.Repo]
 
 # Configures the endpoint
-config :fivesquare, FivesquareWeb.Endpoint,
+config :atlas, AtlasWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "Cc7+dKfUPFv2HrQa5e54aEoYlCMT++zObdtujtGNBgxcaq/gSWSBOOeI1wMYistQ",
-  render_errors: [view: FivesquareWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Fivesquare.PubSub, adapter: Phoenix.PubSub.PG2]
+  render_errors: [view: AtlasWeb.ErrorView, accepts: ~w(json)],
+  pubsub: [name: Atlas.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -25,8 +25,8 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :fivesquare, FivesquareWeb.Guardian,
-  issuer: "fivesquare",
+config :atlas, AtlasWeb.Guardian,
+  issuer: "atlas",
   secret_key: "Jl30rzrYMklaDTet6t/Oxfn7v95/2QBgqoHMVP/1P7FSPKelyfWD/e71fIhcQSd8"
 
 # Import environment specific config. This must remain at the bottom

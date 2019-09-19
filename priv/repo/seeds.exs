@@ -5,12 +5,12 @@
 # Inside the script, you can read and write to any of your
 # repositories directly:
 #
-#     Fivesquare.Repo.insert!(%Fivesquare.SomeSchema{})
+#     Atlas.Repo.insert!(%Atlas.SomeSchema{})
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Fivesquare.Places
+alias Atlas.Places
 
 headers = [:name, :rating, :logo, :website, :lat, :lon]
 

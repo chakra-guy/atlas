@@ -1,4 +1,4 @@
-defmodule Fivesquare.Repo.Migrations.CreateUsers do
+defmodule Atlas.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

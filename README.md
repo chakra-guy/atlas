@@ -1,4 +1,4 @@
-# Fivesquare
+# Atlas
 
 To start your Phoenix server:
 

@@ -1,4 +1,4 @@
-defmodule Fivesquare.Repo.Migrations.CreateReviews do
+defmodule Atlas.Repo.Migrations.CreateReviews do
   use Ecto.Migration
 
   def change do

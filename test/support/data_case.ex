@@ -1,4 +1,4 @@
-defmodule Fivesquare.DataCase do
+defmodule Atlas.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule Fivesquare.DataCase do
 
   using do
     quote do
-      alias Fivesquare.Repo
+      alias Atlas.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Fivesquare.DataCase
+      import Atlas.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Fivesquare.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Atlas.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Fivesquare.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Atlas.Repo, {:shared, self()})
     end
 
     :ok

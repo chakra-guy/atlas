@@ -1,4 +1,4 @@
-defmodule FivesquareWeb.ConnCase do
+defmodule AtlasWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,18 +19,18 @@ defmodule FivesquareWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias FivesquareWeb.Router.Helpers, as: Routes
+      alias AtlasWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint FivesquareWeb.Endpoint
+      @endpoint AtlasWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Fivesquare.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Atlas.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Fivesquare.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Atlas.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

@@ -1,4 +1,4 @@
-defmodule FivesquareWeb.ChannelCase do
+defmodule AtlasWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule FivesquareWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint FivesquareWeb.Endpoint
+      @endpoint AtlasWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Fivesquare.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Atlas.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Fivesquare.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Atlas.Repo, {:shared, self()})
     end
 
     :ok

@@ -1,4 +1,4 @@
-defmodule Fivesquare.Repo.Migrations.InstallPostgisExtension do
+defmodule Atlas.Repo.Migrations.InstallPostgisExtension do
   use Ecto.Migration
 
   def change do

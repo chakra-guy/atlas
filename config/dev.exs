@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :fivesquare, FivesquareWeb.Endpoint,
+config :atlas, AtlasWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -48,9 +48,9 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
-config :fivesquare, Fivesquare.Repo,
+config :atlas, Atlas.Repo,
   username: "postgres",
   password: "postgres",
-  database: "fivesquare_dev",
+  database: "atlas_dev",
   hostname: "localhost",
   pool_size: 10
