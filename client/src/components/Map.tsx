@@ -8,7 +8,7 @@ import ReactMapGL, {
 } from "react-map-gl"
 
 import { useDebouncedCallback } from "../hooks"
-import { Place } from "../App"
+import { Place } from "../types"
 import "./map.scss"
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN

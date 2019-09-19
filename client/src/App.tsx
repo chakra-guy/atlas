@@ -1,56 +1,44 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 
-import { Map } from "./components"
 import "./app.css"
-import { Test } from "./views"
-
-export type Place = {
-  id: number
-  name: string
-  lat: number
-  lon: number
-}
+import Prototype from "./__prototype/Prototype"
+import { Mainpage, Login, Signup } from "./pages"
 
 export default function App(): JSX.Element {
-  const [test, setTest] = useState(true)
-
-  const [geo, setGeo] = useState({ lat: 47.497903, lon: 19.054647 })
-  const [distance, setDistance] = useState(250)
-  const [places, setPlaces] = useState<Array<Place>>([])
-
-  // useEffect(() => {
-  //   const baseURL = "http://localhost:4000/api"
-  //   fetch(
-  //     `${baseURL}/places?place[lat]=${geo.lat}&place[lon]=${geo.lon}&place[distance]=${distance}`,
-  //   )
-  //     .then(response => response.json())
-  //     .then(({ data }) => setPlaces(data))
-  //     .catch(() => {
-  //       //
-  //     })
-  // }, [geo, distance])
+  const [isPrototype, setIsPrototype] = useState(true)
 
   return (
-    <>
-      <button type="button" onClick={() => setTest(state => !state)}>
-        toggle
+    <Router>
+      <button type="button" onClick={() => setIsPrototype(state => !state)}>
+        Toggle App/Prototype
       </button>
-      {test ? (
-        <Test />
+
+      {isPrototype ? (
+        <Prototype />
       ) : (
-        <>
-          <div className="input-container">
-            distance
-            <input type="text" value={distance} onChange={e => setDistance(+e.target.value)} />
+        <Switch>
+          <div>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/Login">Login</Link>
+              </li>
+              <li>
+                <Link to="/Signup">Signup</Link>
+              </li>
+            </ul>
+
+            <hr />
+
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/" component={Mainpage} />
           </div>
-          <div className="map-container">
-            <Map
-              places={places}
-              setCoordinatinates={(lat: number, lon: number) => setGeo({ lat, lon })}
-            />
-          </div>
-        </>
+        </Switch>
       )}
-    </>
+    </Router>
   )
 }
