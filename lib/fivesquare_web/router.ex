@@ -16,14 +16,13 @@ defmodule FivesquareWeb.Router do
     post "/login", SessionController, :create
     post "/logout", SessionController, :delete
 
-    resources "/sessions", SessionController, only: [:create, :delete]
-    resources "/reviews", ReviewController
+    # resources "/sessions", SessionController, only: [:create, :delete]
   end
 
   scope "/api", FivesquareWeb do
     pipe_through [:api, :api_auth]
 
     resources "/places", PlaceController, except: [:new, :edit]
-    # resources "/reviews", ReviewController, except: [:index]
+    resources "/reviews", ReviewController
   end
 end
