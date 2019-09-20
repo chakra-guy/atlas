@@ -1,8 +1,7 @@
-import { flatMap, switchMap, tap, catchError } from "rxjs/operators"
-import { fromFetch } from "rxjs/fetch"
+import { switchMap, catchError } from "rxjs/operators"
 import { from, of } from "rxjs"
 import { ofType } from "./operators"
-import { dispatch } from "./action$"
+import api from "./api"
 
 export const changeName = (payload: any): any => ({
   type: "NAME_CHANGED",
@@ -27,20 +26,10 @@ export const fetchGithubFollowersError = (payload: any): any => ({
 export const fetchGithubFollowersStream = (action$: any) => {
   return action$.pipe(
     ofType<any>("FETCH_GITHUB"),
-    flatMap(() =>
-      fromFetch("https://api.github.com/users?per_page=5").pipe(
-        switchMap((response: any): any =>
-          from(response.json()).pipe(
-            tap(data => {
-              console.log("data", data)
-              dispatch(fetchGithubFollowersSuccess("success tomi"))
-            }),
-          ),
-        ),
-        catchError((err: any): any => {
-          console.error(err)
-          return of(fetchGithubFollowersError("error tomi")) // FIXME
-        }),
+    switchMap(() =>
+      from(api.get("https://api.github.com/users?per_page=5")).pipe(
+        switchMap(res => of(fetchGithubFollowersSuccess(res), changeName("success tomi"))),
+        catchError(() => of(fetchGithubFollowersError("error tomi"))),
       ),
     ),
   )

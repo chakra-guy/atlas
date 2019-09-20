@@ -2,18 +2,47 @@ import React from "react"
 
 import { useObservable } from "../hooks/useObservable"
 
-import { Action$ } from "../types"
-import { dispatch, action$ } from "./action$"
-import testStore from "./testStore"
-import { fetchGithubFollowersStream, changeName, fetchGithubFollowers } from "./testActions"
+import { dispatch } from "./action$"
+import store$ from "./store$"
+import { changeName, fetchGithubFollowers } from "./testActions"
+import { tap, map, distinctUntilChanged } from "rxjs/operators"
 
-const startRoutines = (stream$: Action$) => [fetchGithubFollowersStream(stream$).subscribe()]
+// const view$ = state$.pipe(
+//   pluck('fuel'),
+//   distinctUntilChanged(),
+//   withLatestFrom(fuelPrice$),
+//   map(([rocketFuel, fuelPrice]) => ({
+//     hasError: false,
+//     isLoading: false,
+//     refuelCost: FUEL_CAPACITY - rocketFuel * fuelPrice
+//   })),
+//   startWith({
+//     isLoading: true,
+//     hasError: false
+//   }),
+//   catchError(() => of({
+//     hasError: true,
+//     isLoading: false
+//   }))
+// );
 
-startRoutines(action$)
+const view$ = store$.pipe(
+  // Selector
+  map((state: any) => ({ name: state.name, color: state.color })),
+  // memoize
+  // distinctUntilChanged(),
+  // distinctUntilChanged((prevState: any, nextState: any) => {
+  //   console.log("->: prevState", prevState)
+  //   console.log("->: nextState", nextState)
+
+  //   return prevState.name === nextState.name
+  // }),
+  tap(() => console.log("changed")),
+)
 
 // Component.tsx
 export default function Prototype(): JSX.Element {
-  const { name, color } = useObservable<any>(testStore, () => ({}))
+  const { name, color } = useObservable<any>(view$, () => ({}))
 
   return (
     <div>
