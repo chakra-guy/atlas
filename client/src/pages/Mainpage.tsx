@@ -21,8 +21,8 @@ export default function Mainpage() {
 
   return (
     <div>
-      mainpage
-      <div className="input-container">
+      mainpage [map]
+      {/* <div className="input-container">
         distance
         <input type="text" value={distance} onChange={e => setDistance(+e.target.value)} />
       </div>
@@ -31,7 +31,7 @@ export default function Mainpage() {
           places={places}
           setCoordinatinates={(lat: number, lon: number) => setGeo({ lat, lon })}
         />
-      </div>
+      </div> */}
     </div>
   )
 }
