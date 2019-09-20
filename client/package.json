@@ -17,6 +17,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "rxjs": "^6.5.3",
+    "rxjs-hooks": "^0.5.1",
     "typescript": "3.5.3"
   },
   "scripts": {

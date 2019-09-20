@@ -1,7 +1,7 @@
 import React from "react"
+import { useObservable } from "rxjs-hooks"
 import { map, distinctUntilChanged, tap } from "rxjs/operators"
 
-import { useObservable } from "../hooks/useObservable"
 import store$, { dispatch } from "./store$"
 import { changeName, fetchGithubFollowers } from "./testActions"
 
@@ -12,7 +12,7 @@ const view$ = store$.pipe(
 )
 
 export default function Prototype(): JSX.Element {
-  const { name, color } = useObservable<any>(view$, () => ({}))
+  const { name, color } = useObservable(() => view$, { name: "-", color: "-" })
 
   return (
     <div>

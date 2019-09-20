@@ -1,7 +1,8 @@
 import React from "react"
-import { map, distinctUntilChanged, tap, debounceTime, switchMap } from "rxjs/operators"
+import { useObservable, useEventCallback } from "rxjs-hooks"
+import { map, distinctUntilChanged, tap, ignoreElements, debounceTime } from "rxjs/operators"
+import { Observable } from "rxjs"
 
-import { useObservable } from "../hooks/useObservable"
 import store$, { dispatch } from "./store$"
 import { increment } from "./testActions"
 
@@ -12,7 +13,15 @@ const view$ = store$.pipe(
 )
 
 export default function PrototypeB(): JSX.Element {
-  const { count } = useObservable<any>(view$, () => ({}))
+  const { count } = useObservable(() => view$, { count: -1 })
+  const [handleClick] = useEventCallback(
+    (event$: Observable<React.SyntheticEvent<HTMLButtonElement>>) =>
+      event$.pipe(
+        debounceTime(500),
+        tap(() => dispatch(increment())),
+        ignoreElements(),
+      ),
+  )
 
   return (
     <div>
@@ -21,9 +30,9 @@ export default function PrototypeB(): JSX.Element {
         +1
       </button>
 
-      {/* <button type="button" onClick={e => onClick$.next(e)}>
+      <button type="button" onClick={handleClick}>
         handle click debounced
-      </button> */}
+      </button>
     </div>
   )
 }
