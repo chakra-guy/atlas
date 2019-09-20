@@ -1,19 +1,13 @@
 import React from "react"
 
 import { useObservable } from "../hooks/useObservable"
+import store$, { dispatch } from "./store$"
+import { changeName, fetchGithubFollowers } from "./testActions"
 
-import { Action$ } from "../types"
-import { dispatch, action$ } from "./action$"
-import testStore from "./testStore"
-import { fetchGithubFollowersStream, changeName, fetchGithubFollowers } from "./testActions"
+const view$ = store$.pipe()
 
-const startRoutines = (stream$: Action$) => [fetchGithubFollowersStream(stream$).subscribe()]
-
-startRoutines(action$)
-
-// Component.tsx
 export default function Prototype(): JSX.Element {
-  const { name, color } = useObservable<any>(testStore, () => ({}))
+  const { name, color } = useObservable<any>(view$, () => ({}))
 
   return (
     <div>
