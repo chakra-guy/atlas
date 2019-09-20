@@ -3,6 +3,10 @@ import { from, of } from "rxjs"
 import { ofType } from "./operators"
 import { api } from "../_lib"
 
+export const increment = (): any => ({
+  type: "INCREMENT",
+})
+
 export const changeName = (payload: any): any => ({
   type: "NAME_CHANGED",
   payload,
@@ -28,10 +32,8 @@ export const fetchGithubFollowersStream = (action$: any) => {
     ofType<any>("FETCH_GITHUB"),
     switchMap(() =>
       from(api.get("https://api.github.com/users?per_page=5")).pipe(
-        switchMap((res: any): any =>
-          of(changeName("success tamas"), fetchGithubFollowersSuccess(res)),
-        ),
-        catchError((err: any): any => of(fetchGithubFollowersError("error tomi"))),
+        switchMap((res: any) => of(changeName("success tamas"), fetchGithubFollowersSuccess(res))),
+        catchError(() => of(fetchGithubFollowersError("error tomi"))),
       ),
     ),
   )

@@ -4,8 +4,6 @@ const defaultState = {
 }
 
 export default function testReducer(state: any = defaultState, action: any): any {
-  console.log("reducer: ", action)
-
   switch (action.type) {
     case "NAME_CHANGED":
       return {

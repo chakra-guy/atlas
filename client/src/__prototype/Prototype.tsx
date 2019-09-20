@@ -1,10 +1,15 @@
 import React from "react"
+import { map, distinctUntilChanged, tap } from "rxjs/operators"
 
 import { useObservable } from "../hooks/useObservable"
 import store$, { dispatch } from "./store$"
 import { changeName, fetchGithubFollowers } from "./testActions"
 
-const view$ = store$.pipe()
+const view$ = store$.pipe(
+  map((state: any) => state.test),
+  distinctUntilChanged(),
+  tap(() => console.log("test changed")),
+)
 
 export default function Prototype(): JSX.Element {
   const { name, color } = useObservable<any>(view$, () => ({}))

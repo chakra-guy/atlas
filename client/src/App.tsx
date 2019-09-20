@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import "./app.css"
 import Prototype from "./__prototype/Prototype"
 import { Mainpage, Login, Signup } from "./pages"
+import PrototypeB from "./__prototype/PrototypeB"
 
 export default function App(): JSX.Element {
   const [isPrototype, setIsPrototype] = useState(true)
@@ -15,7 +16,10 @@ export default function App(): JSX.Element {
       </button>
 
       {isPrototype ? (
-        <Prototype />
+        <>
+          <Prototype />
+          <PrototypeB />
+        </>
       ) : (
         <Switch>
           <div>
