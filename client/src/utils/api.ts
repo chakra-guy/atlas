@@ -1,5 +1,4 @@
-// const API = process.env.REACT_APP_API_URL
-const API = ""
+const API = process.env.REACT_APP_API_URL
 
 function headers() {
   let token: string | null = null
@@ -27,7 +26,8 @@ function parseResponse(response: any) {
 
 function queryString(params: any) {
   const query = Object.keys(params)
-    .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
+    // .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`) // FIXME ?
+    .map(k => `${k}=${encodeURIComponent(params[k])}`)
     .join("&")
   return `${query.length ? "?" : ""}${query}`
 }

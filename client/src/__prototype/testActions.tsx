@@ -1,7 +1,7 @@
 import { switchMap, catchError } from "rxjs/operators"
 import { from, of } from "rxjs"
 import { ofType } from "./operators"
-import { api } from "../_lib"
+import { api } from "../utils"
 
 export const increment = (): any => ({
   type: "INCREMENT",
