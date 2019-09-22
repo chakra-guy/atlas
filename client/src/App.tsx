@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
+import { styled } from "baseui"
 
 import "./app.css"
 import Prototype from "./__prototype/Prototype"
@@ -8,6 +9,12 @@ import PrototypeB from "./__prototype/PrototypeB"
 import Private from "./pages/Private"
 import { PrivateRoute } from "./components"
 
+const MyButton = styled("button", {
+  width: "120px",
+  height: "40px",
+  padding: "12px",
+})
+
 export default function App(): JSX.Element {
   const [isPrototype, setIsPrototype] = useState(false)
 
@@ -15,9 +22,9 @@ export default function App(): JSX.Element {
 
   return (
     <Router>
-      <button type="button" onClick={() => setIsPrototype(state => !state)}>
+      <MyButton type="button" onClick={() => setIsPrototype(state => !state)}>
         Toggle App/Prototype
-      </button>
+      </MyButton>
 
       {isPrototype ? (
         <>
