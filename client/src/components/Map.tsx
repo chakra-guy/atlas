@@ -18,7 +18,7 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
   C20.1,15.8,20.2,15.8,20.2,15.7z`
 
 type Props = {
-  places: Array<Place>
+  places: Place[]
   setCoordinatinates: (lat: number, lon: number) => void
 }
 
@@ -47,14 +47,13 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
       height="100%"
       onClick={() => console.log("handle click away here")}
     >
-      {places.length > 0 &&
-        places.map(place => (
-          <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
-            <MarkerIcon viewBox="0 0 24 24" onClick={() => setPopup({ open: true, place })}>
-              <path d={ICON} />
-            </MarkerIcon>
-          </Marker>
-        ))}
+      {places.map(place => (
+        <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
+          <MarkerIcon viewBox="0 0 24 24" onClick={() => setPopup({ open: true, place })}>
+            <path d={ICON} />
+          </MarkerIcon>
+        </Marker>
+      ))}
 
       {popup.open && (
         <Popup
