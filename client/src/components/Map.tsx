@@ -6,10 +6,10 @@ import ReactMapGL, {
   ViewState,
   Popup,
 } from "react-map-gl"
+import { styled } from "baseui"
 
 import { useDebouncedCallback } from "../hooks"
 import { Place } from "../types"
-import "./map.scss"
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 
@@ -45,18 +45,14 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
       onViewportChange={handleViewportChange}
       width="100%"
       height="100%"
+      onClick={() => console.log("handle click away here")}
     >
       {places.length > 0 &&
         places.map(place => (
           <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
-            <svg
-              height={20}
-              viewBox="0 0 24 24"
-              className="marker"
-              onClick={() => setPopup({ open: true, place })}
-            >
+            <MarkerIcon viewBox="0 0 24 24" onClick={() => setPopup({ open: true, place })}>
               <path d={ICON} />
-            </svg>
+            </MarkerIcon>
           </Marker>
         ))}
 
@@ -68,13 +64,12 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
           closeOnClick={false}
           onClose={() => setPopup({ open: false, place: { lat: 0, lon: 0 } })}
           anchor="bottom"
-          className="popup"
         >
-          <img src={popup.place.logo} alt="company logo" />
-          <div className="popup-info">
+          <PopupContent>
+            <img src={popup.place.logo} alt="company logo" />
             <div>{popup.place.name}</div>
             <div>{popup.place.rating}</div>
-          </div>
+          </PopupContent>
         </Popup>
       )}
 
@@ -86,3 +81,17 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
     </ReactMapGL>
   )
 }
+
+const MarkerIcon = styled("svg", {
+  height: "20px",
+  cursor: "pointer",
+  fill: "#d00",
+  stroke: "none",
+  transform: "translate(-10px, -20px)",
+})
+
+const PopupContent = styled("div", {
+  display: "flex",
+  width: "240px",
+  height: "120px",
+})
