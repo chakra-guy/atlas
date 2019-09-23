@@ -1,9 +1,23 @@
-export const defaultState = {
+import { Observable, OperatorFunction } from "rxjs"
+import { scan, shareReplay, startWith, catchError } from "rxjs/operators"
+import { action$ } from "./action$"
+import { catchErrorLogAndContinue } from "./operators"
+
+function createState(createStream: any): any {
+  return (...streams: Observable<any>[]) => {
+    return createStream(...streams).pipe(
+      catchErrorLogAndContinue(),
+      shareReplay({ bufferSize: 1, refCount: true }),
+    )
+  }
+}
+
+const defaultState = {
   color: "red",
   name: "init name",
 }
 
-export default function testReducer(state: any, action: any): any {
+const reducer = (state: any, action: any): any => {
   console.log("reducer: ", action)
 
   switch (action.type) {
@@ -16,9 +30,18 @@ export default function testReducer(state: any, action: any): any {
     case "FETCH_GITHUB_FOLLOWERS_ERROR":
       return {
         ...state,
-        github: action.payload,
+        name: action.payload,
       }
     default:
       return state
   }
 }
+
+const state$ = createState((stream$: any) =>
+  stream$.pipe(
+    startWith(defaultState),
+    scan(reducer),
+  ),
+)
+
+export default state$(action$)
