@@ -34,18 +34,24 @@ export default function Navbar() {
   )
 }
 
-const Container = styled(HeaderNavigation, {
-  "padding-right": "24px",
-})
+const Container = styled(HeaderNavigation, p => ({
+  paddingRight: p.$theme.sizing.scale800,
+}))
 
-const LogoLink = styled(Link, {
-  color: "#000000",
-  "text-decoration": "none",
-  "font-weight": 500,
-})
+const LogoLink = styled(Link, p => ({
+  ...p.$theme.typography.font550,
+  textDecoration: "none",
+  color: p.$theme.colors.mono1000,
+  ":hover": {
+    color: p.$theme.colors.accent,
+  },
+}))
 
-const MenuLink = styled(Link, {
-  color: "#000000",
-  "text-decoration": "none",
-  "font-weight": 500,
-})
+const MenuLink = styled(Link, p => ({
+  ...p.$theme.typography.font450,
+  textDecoration: "none",
+  color: p.$theme.colors.mono1000,
+  ":hover": {
+    color: p.$theme.colors.accent,
+  },
+}))

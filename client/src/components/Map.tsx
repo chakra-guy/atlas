@@ -81,16 +81,16 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
   )
 }
 
-const MarkerIcon = styled("svg", {
+const MarkerIcon = styled("svg", p => ({
+  fill: p.$theme.colors.accent,
   height: "20px",
   cursor: "pointer",
-  fill: "#d00",
   stroke: "none",
   transform: "translate(-10px, -20px)",
-})
+}))
 
 const PopupContent = styled("div", {
   display: "flex",
-  width: "240px",
-  height: "120px",
+  width: "240px", // FIXME not responsive
+  height: "120px", // FIXME not responsive
 })

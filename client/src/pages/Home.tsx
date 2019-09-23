@@ -48,18 +48,18 @@ export default function Mainpage() {
   )
 }
 
-const DistanceContainer = styled("div", {
+const DistanceContainer = styled("div", p => ({
   position: "absolute",
-  background: "white",
-  margin: "24px",
-  padding: "12px",
-  "border-radius": "8px",
-  "box-shadow": "0px 2px 4px rgba(0, 0, 0, 0.12)",
-  "z-index": 1994,
-})
+  background: p.$theme.colors.mono100,
+  margin: p.$theme.sizing.scale800,
+  padding: p.$theme.sizing.scale500,
+  borderRadius: p.$theme.sizing.scale300,
+  boxShadow: p.$theme.lighting.shadow500,
+  zIndex: 1000,
+}))
 
-const MapContainer = styled("div", {
+const MapContainer = styled("div", p => ({
   height: "100%",
   width: "100%",
-  "background-color": "aquamarine",
-})
+  backgroundColor: p.$theme.colors.mono100,
+}))

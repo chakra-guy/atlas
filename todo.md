@@ -1,9 +1,7 @@
 # Client
 
-- [ ] add proper types to useDebouncedCallback()
-- [ ] test debounced setCoordinatinates()
+- [ ] replace useDebouncedCallback() to lodash debounce
 - [ ] figure out what to do with "explicit-function-return-type" rule
-- [ ] add styling to <GeolocateControl />
 
 # API
 
