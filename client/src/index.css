@@ -5,7 +5,7 @@ body,
 }
 
 /* Fix height for BaseProvider */
-#root > div {
+#root > div:first-of-type {
   height: 100%;
 }
 
