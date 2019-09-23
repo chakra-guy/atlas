@@ -1,10 +1,7 @@
-import { Subject, Observable } from "rxjs"
-import { share, tap, scan, startWith, shareReplay } from "rxjs/operators"
+import { Observable } from "rxjs"
+import { shareReplay } from "rxjs/operators"
 
-import { ActionShape, Action$ } from "../types"
 import { catchErrorLogAndContinue } from "./operators$"
-import { fetchNearByPlaces } from "../pages/homeActions"
-import { mapReducer } from "../pages/homeReducer"
 
 export const createState = (createStream: any) => {
   return (...streams: Observable<any>[]) => {
@@ -41,31 +38,3 @@ export const combineReducers = (reducers: any) => {
     return nextState
   }
 }
-
-const createActionStream = () => new Subject<ActionShape>()
-const actionSubject$ = createActionStream()
-
-export const action$ = actionSubject$.pipe(share())
-
-export const dispatch = (action: ActionShape) => {
-  actionSubject$.next(action)
-}
-
-export const startRoutines = (stream$: Action$) => [
-  // FIXME how to name these? Routine, Epic, Hook,
-  fetchNearByPlaces(stream$).subscribe(dispatch),
-]
-
-const rootReducers = combineReducers({
-  map: mapReducer, // FIXME rename this
-})
-
-const store$ = createState((stream$: any) =>
-  stream$.pipe(
-    startWith(undefined, { type: "INIT_STATE" }),
-    scan(rootReducers),
-    tap((state: any) => console.log("STATE", state)),
-  ),
-)
-
-export default store$(action$)

@@ -8,6 +8,8 @@ import ReactMapGL, {
 } from "react-map-gl"
 import { styled } from "baseui"
 
+import "./map.css"
+
 import { useDebouncedCallback } from "../hooks"
 import { Place } from "../types"
 
@@ -45,7 +47,6 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
       onViewportChange={handleViewportChange}
       width="100%"
       height="100%"
-      onClick={() => console.log("handle click away here")}
     >
       {places.map(place => (
         <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
@@ -91,6 +92,6 @@ const MarkerIcon = styled("svg", p => ({
 
 const PopupContent = styled("div", {
   display: "flex",
-  width: "240px", // FIXME not responsive
-  height: "120px", // FIXME not responsive
+  width: "240px",
+  height: "120px",
 })

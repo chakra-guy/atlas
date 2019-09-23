@@ -8,11 +8,11 @@ import { LightTheme, BaseProvider } from "baseui"
 import "./index.css"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
-import { startRoutines, action$ } from "./utils/store$"
+import { runEpics, action$ } from "./store$"
 
 const engine = new Styletron()
 
-startRoutines(action$)
+runEpics(action$)
 
 ReactDOM.render(
   <StyletronProvider value={engine}>

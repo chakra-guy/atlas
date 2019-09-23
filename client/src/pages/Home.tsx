@@ -4,8 +4,8 @@ import { styled } from "baseui"
 import { useObservable } from "rxjs-hooks"
 
 import { Map } from "../components"
-import store$, { dispatch } from "../utils/store$"
-import { setDistance, setGeo, fetchNearByPlacesFixme } from "./homeActions"
+import store$, { dispatch } from "../store$"
+import { setDistance, setGeo, fetchNearByPlaces } from "./homeActions"
 
 const view$ = store$.pipe(
   map((state: any) => state.map),
@@ -25,7 +25,7 @@ export default function Mainpage() {
 
   useEffect(() => {
     // FIXME this whole thing could be in rxjs
-    dispatch(fetchNearByPlacesFixme({ geo, distance }))
+    dispatch(fetchNearByPlaces({ geo, distance }))
   }, [geo, distance])
 
   return (

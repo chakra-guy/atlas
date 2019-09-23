@@ -26,7 +26,6 @@ function parseResponse(response: any) {
 
 function queryString(params: any) {
   const query = Object.keys(params)
-    // .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`) // FIXME ?
     .map(k => `${k}=${encodeURIComponent(params[k])}`)
     .join("&")
   return `${query.length ? "?" : ""}${query}`

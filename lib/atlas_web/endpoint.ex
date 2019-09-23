@@ -40,7 +40,8 @@ defmodule AtlasWeb.Endpoint do
     key: "_atlas_key",
     signing_salt: "/moKEvR4"
 
-  plug CORSPlug, origin: ["http://localhost:3000"]
+  # FIXME
+  plug CORSPlug, origin: ["http://localhost:3000", "http://localhost:5000"]
 
   plug AtlasWeb.Router
 end

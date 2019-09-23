@@ -19,13 +19,13 @@ export const setFixmePlaces = (payload: any) => ({
   payload,
 })
 
-export const fetchNearByPlacesFixme = (payload: any) => ({
+export const fetchNearByPlaces = (payload: any) => ({
   type: "FETCH_NEAR_BY_PLACES",
   payload,
 })
 
 // FIXME could be using just state$ here
-export const fetchNearByPlaces = (action$: any) => {
+export const fetchNearByPlacesEpic = (action$: any) => {
   return action$.pipe(
     ofType<any>("FETCH_NEAR_BY_PLACES"),
     map(({ payload }: any) => ({

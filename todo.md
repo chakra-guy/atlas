@@ -2,6 +2,7 @@
 
 - [ ] replace useDebouncedCallback() to lodash debounce
 - [ ] figure out what to do with "explicit-function-return-type" rule
+- [ ] add transition to map markers to make it look like it loads faster
 
 # API
 
