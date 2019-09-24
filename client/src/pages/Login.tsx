@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
+import { Form, Field } from "react-final-form"
 import { FormControl } from "baseui/form-control"
 import { Card } from "baseui/card"
-import { Input } from "baseui/input"
+import { Input, SIZE } from "baseui/input"
 import { Button, KIND } from "baseui/button"
 
 const cardOverrides = {
@@ -18,37 +19,59 @@ const cardOverrides = {
   },
 }
 
-export default function Login() {
-  const [loginValue, setLoginValue] = useState("")
-  const [passwordValue, setPasswordValue] = useState("")
+interface FormValues {
+  username: string
+  password: string
+}
 
-  const handleSubmit = (e: React.SyntheticEvent<EventTarget>) => {
-    e.preventDefault()
-    console.log("submitted")
+export default function Login() {
+  const handleSubmit = (values: FormValues) => {
+    console.log("submitted", values)
   }
+
+  const required = (value: string | undefined) => (value ? undefined : "Required")
 
   return (
     <Card title="Login" overrides={cardOverrides}>
-      <form onSubmit={handleSubmit}>
-        <FormControl label="Username">
-          <Input
-            id="login-input"
-            value={loginValue}
-            onChange={e => setLoginValue(e.currentTarget.value)}
-          />
-        </FormControl>
-        <FormControl label="Password">
-          <Input
-            id="password-input"
-            type="password"
-            value={passwordValue}
-            onChange={e => setPasswordValue(e.currentTarget.value)}
-          />
-        </FormControl>
-        <Button type="submit" kind={KIND.primary}>
-          Log in
-        </Button>
-      </form>
+      <Form
+        onSubmit={handleSubmit}
+        render={p => (
+          <form onSubmit={p.handleSubmit}>
+            <Field
+              name="username"
+              validate={required}
+              render={({ input, meta: { error, touched } }) => (
+                <FormControl error={error && touched && "Required"}>
+                  <Input
+                    size={SIZE.large}
+                    placeholder="Username"
+                    error={error && touched}
+                    {...input}
+                  />
+                </FormControl>
+              )}
+            />
+            <Field
+              name="password"
+              type="password"
+              validate={required}
+              render={({ input, meta: { error, touched } }) => (
+                <FormControl error={error && touched && "Required"}>
+                  <Input
+                    size={SIZE.large}
+                    placeholder="Password"
+                    error={error && touched}
+                    {...input}
+                  />
+                </FormControl>
+              )}
+            />
+            <Button type="submit" kind={KIND.primary}>
+              Log in
+            </Button>
+          </form>
+        )}
+      />
     </Card>
   )
 }
