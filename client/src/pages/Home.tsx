@@ -7,6 +7,22 @@ import { Map } from "../components"
 import store$, { dispatch } from "../store$"
 import { setDistance, setGeo, fetchNearByPlaces } from "./homeActions"
 
+const DistanceContainer = styled("div", p => ({
+  position: "absolute",
+  background: p.$theme.colors.mono100,
+  margin: p.$theme.sizing.scale800,
+  padding: p.$theme.sizing.scale500,
+  borderRadius: p.$theme.sizing.scale300,
+  boxShadow: p.$theme.lighting.shadow500,
+  zIndex: 1000,
+}))
+
+const MapContainer = styled("div", p => ({
+  height: "100%",
+  width: "100%",
+  backgroundColor: p.$theme.colors.mono100,
+}))
+
 const view$ = store$.pipe(
   map((state: any) => state.map),
   distinctUntilChanged(),
@@ -47,19 +63,3 @@ export default function Mainpage() {
     </>
   )
 }
-
-const DistanceContainer = styled("div", p => ({
-  position: "absolute",
-  background: p.$theme.colors.mono100,
-  margin: p.$theme.sizing.scale800,
-  padding: p.$theme.sizing.scale500,
-  borderRadius: p.$theme.sizing.scale300,
-  boxShadow: p.$theme.lighting.shadow500,
-  zIndex: 1000,
-}))
-
-const MapContainer = styled("div", p => ({
-  height: "100%",
-  width: "100%",
-  backgroundColor: p.$theme.colors.mono100,
-}))

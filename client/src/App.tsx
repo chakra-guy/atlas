@@ -5,6 +5,10 @@ import { styled } from "baseui"
 import { Home, Login, Signup, Private } from "./pages"
 import { PrivateRoute, Navbar } from "./components"
 
+const Container = styled("div", {
+  height: "100%",
+})
+
 export default function App(): JSX.Element {
   return (
     <Container>
@@ -23,7 +27,3 @@ export default function App(): JSX.Element {
     </Container>
   )
 }
-
-const Container = styled("div", {
-  height: "100%",
-})

@@ -8,6 +8,28 @@ import {
 } from "baseui/header-navigation"
 import { styled } from "baseui"
 
+const Container = styled(HeaderNavigation, p => ({
+  paddingRight: p.$theme.sizing.scale800,
+}))
+
+const LogoLink = styled(Link, p => ({
+  ...p.$theme.typography.font550,
+  textDecoration: "none",
+  color: p.$theme.colors.mono1000,
+  ":hover": {
+    color: p.$theme.colors.accent,
+  },
+}))
+
+const MenuLink = styled(Link, p => ({
+  ...p.$theme.typography.font450,
+  textDecoration: "none",
+  color: p.$theme.colors.mono1000,
+  ":hover": {
+    color: p.$theme.colors.accent,
+  },
+}))
+
 export default function Navbar() {
   return (
     <Container>
@@ -33,25 +55,3 @@ export default function Navbar() {
     </Container>
   )
 }
-
-const Container = styled(HeaderNavigation, p => ({
-  paddingRight: p.$theme.sizing.scale800,
-}))
-
-const LogoLink = styled(Link, p => ({
-  ...p.$theme.typography.font550,
-  textDecoration: "none",
-  color: p.$theme.colors.mono1000,
-  ":hover": {
-    color: p.$theme.colors.accent,
-  },
-}))
-
-const MenuLink = styled(Link, p => ({
-  ...p.$theme.typography.font450,
-  textDecoration: "none",
-  color: p.$theme.colors.mono1000,
-  ":hover": {
-    color: p.$theme.colors.accent,
-  },
-}))
