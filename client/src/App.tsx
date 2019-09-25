@@ -1,9 +1,10 @@
 import React from "react"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { Router, Switch, Route } from "react-router-dom"
 import { styled } from "baseui"
 
 import { Home, Login, Signup, Private } from "./pages"
 import { PrivateRoute, Navbar } from "./components"
+import history from "./history"
 
 const Container = styled("div", {
   height: "100%",
@@ -12,7 +13,7 @@ const Container = styled("div", {
 export default function App(): JSX.Element {
   return (
     <Container>
-      <Router>
+      <Router history={history}>
         <Switch>
           <>
             <Navbar />

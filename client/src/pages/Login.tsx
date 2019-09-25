@@ -1,4 +1,5 @@
 import React from "react"
+import { Redirect } from "react-router-dom"
 import { map, distinctUntilChanged, tap } from "rxjs/operators"
 import { useObservable } from "rxjs-hooks"
 import { Form, Field } from "react-final-form"
@@ -32,17 +33,20 @@ const view$ = store$.pipe(
 
 // FIXME
 const initialState = {
+  isAuthenticated: false,
   isAuthenticating: false,
   user: null,
   token: null,
 }
 
 export default function Login() {
-  const { isAuthenticating } = useObservable(() => view$, initialState)
+  const { isAuthenticated, isAuthenticating } = useObservable(() => view$, initialState)
 
   const required = (value: string | undefined) => (value ? undefined : "Required")
 
-  return (
+  return isAuthenticated ? (
+    <Redirect to="/" />
+  ) : (
     <Card title="Login" overrides={cardOverrides}>
       <Form
         onSubmit={values => dispatch(login(values))}

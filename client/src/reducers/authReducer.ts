@@ -1,4 +1,5 @@
 const initialState = {
+  isAuthenticated: false,
   isAuthenticating: false,
   user: null,
   token: null,
@@ -15,6 +16,7 @@ export const authReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isAuthenticating: false,
+        isAuthenticated: true,
         user: action.payload.user,
         token: action.payload.token,
       }
