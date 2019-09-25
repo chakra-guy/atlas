@@ -9,7 +9,7 @@ import { Input, SIZE } from "baseui/input"
 import { Button, KIND } from "baseui/button"
 
 import store$, { dispatch } from "../store$"
-import { login } from "../actions/loginActions"
+import { login } from "../actions/auth"
 
 const cardOverrides = {
   Root: {

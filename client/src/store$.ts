@@ -4,10 +4,10 @@ import { share, tap, scan, startWith } from "rxjs/operators"
 import { ActionShape, Action$ } from "./types"
 import { combineReducers, createState } from "./utils/storeHelpers"
 
-import { mapReducer } from "./reducers/mapReducer"
-import { authReducer } from "./reducers/authReducer"
-import { fetchNearByPlacesEpic } from "./actions/homeActions"
-import { loginEpic } from "./actions/loginActions"
+import { mapReducer } from "./reducers/map"
+import { authReducer } from "./reducers/auth"
+import { fetchNearByPlacesEpic } from "./actions/map"
+import { loginEpic } from "./actions/auth"
 
 const createActionStream = () => new Subject<ActionShape>()
 const actionSubject$ = createActionStream()

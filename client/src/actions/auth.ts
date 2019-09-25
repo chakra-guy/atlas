@@ -31,7 +31,9 @@ export const loginEpic = (action$: any) => {
     })),
     switchMap((params: any) =>
       from(api.post("/login", params)).pipe(
-        switchMap(({ data, meta }: any) => of(loginSuccess({ user: data, token: meta.token }))),
+        switchMap(({ data, meta }: any) => {
+          return of(loginSuccess({ user: data, token: meta.token }))
+        }),
         catchError(() => of(loginFailed())),
         startWith(loginStart()),
       ),

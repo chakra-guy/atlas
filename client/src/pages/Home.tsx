@@ -5,7 +5,7 @@ import { useObservable } from "rxjs-hooks"
 
 import { Map } from "../components"
 import store$, { dispatch } from "../store$"
-import { setDistance, setGeo, fetchNearByPlaces } from "../actions/homeActions"
+import { setDistance, setGeo, fetchNearByPlaces } from "../actions/map"
 
 const DistanceContainer = styled("div", p => ({
   position: "absolute",
