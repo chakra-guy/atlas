@@ -2,9 +2,12 @@ import { Subject } from "rxjs"
 import { share, tap, scan, startWith } from "rxjs/operators"
 
 import { ActionShape, Action$ } from "./types"
-import { fetchNearByPlacesEpic } from "./pages/homeActions"
-import { mapReducer } from "./pages/homeReducer"
 import { combineReducers, createState } from "./utils/storeHelpers"
+
+import { mapReducer } from "./reducers/mapReducer"
+import { authReducer } from "./reducers/authReducer"
+import { fetchNearByPlacesEpic } from "./actions/homeActions"
+import { loginEpic } from "./actions/loginActions"
 
 const createActionStream = () => new Subject<ActionShape>()
 const actionSubject$ = createActionStream()
@@ -15,10 +18,14 @@ export const dispatch = (action: ActionShape) => {
   actionSubject$.next(action)
 }
 
-export const runEpics = (stream$: Action$) => [fetchNearByPlacesEpic(stream$).subscribe(dispatch)]
+export const runEpics = (stream$: Action$) => [
+  fetchNearByPlacesEpic(stream$).subscribe(dispatch),
+  loginEpic(stream$).subscribe(dispatch),
+]
 
 const rootReducers = combineReducers({
-  map: mapReducer, // FIXME rename this
+  map: mapReducer,
+  auth: authReducer,
 })
 
 const store$ = createState((stream$: any) =>

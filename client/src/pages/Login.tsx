@@ -1,9 +1,14 @@
 import React from "react"
+import { map, distinctUntilChanged, tap } from "rxjs/operators"
+import { useObservable } from "rxjs-hooks"
 import { Form, Field } from "react-final-form"
 import { FormControl } from "baseui/form-control"
 import { Card } from "baseui/card"
 import { Input, SIZE } from "baseui/input"
 import { Button, KIND } from "baseui/button"
+
+import store$, { dispatch } from "../store$"
+import { login } from "../actions/loginActions"
 
 const cardOverrides = {
   Root: {
@@ -19,22 +24,28 @@ const cardOverrides = {
   },
 }
 
-interface FormValues {
-  username: string
-  password: string
+const view$ = store$.pipe(
+  map((state: any) => state.auth),
+  distinctUntilChanged(),
+  tap(() => console.log("auth changed")),
+)
+
+// FIXME
+const initialState = {
+  isAuthenticating: false,
+  user: null,
+  token: null,
 }
 
 export default function Login() {
-  const handleSubmit = (values: FormValues) => {
-    console.log("submitted", values)
-  }
+  const { isAuthenticating } = useObservable(() => view$, initialState)
 
   const required = (value: string | undefined) => (value ? undefined : "Required")
 
   return (
     <Card title="Login" overrides={cardOverrides}>
       <Form
-        onSubmit={handleSubmit}
+        onSubmit={values => dispatch(login(values))}
         render={p => (
           <form onSubmit={p.handleSubmit}>
             <Field
@@ -66,7 +77,13 @@ export default function Login() {
                 </FormControl>
               )}
             />
-            <Button type="submit" kind={KIND.primary}>
+            <Button
+              type="submit"
+              isLoading={isAuthenticating}
+              disabled={isAuthenticating}
+              kind={KIND.primary}
+              endEnhancer={<span>→</span>}
+            >
               Log in
             </Button>
           </form>

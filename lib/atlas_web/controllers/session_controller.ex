@@ -6,7 +6,7 @@ defmodule AtlasWeb.SessionController do
 
   alias AtlasWeb.Guardian
 
-  def create(conn, %{"credentials" => %{"username" => username, "password" => password}}) do
+  def create(conn, %{"username" => username, "password" => password}) do
     case Accounts.authenticate(username, password) do
       {:ok, %User{} = user} ->
         {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
