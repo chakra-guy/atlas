@@ -7,6 +7,7 @@ import { FormControl } from "baseui/form-control"
 import { Card } from "baseui/card"
 import { Input, SIZE } from "baseui/input"
 import { Button, KIND } from "baseui/button"
+import { Toast, KIND as TOAST_KIND } from "baseui/toast"
 
 import store$, { dispatch } from "../store$"
 import { login } from "../actions/auth"
@@ -37,10 +38,14 @@ const initialState = {
   isAuthenticating: false,
   user: null,
   token: null,
+  error: null,
 }
 
 export default function Login() {
-  const { isAuthenticated, isAuthenticating } = useObservable(() => view$, initialState)
+  const { isAuthenticated, isAuthenticating, error: apiError } = useObservable(
+    () => view$,
+    initialState,
+  )
 
   const required = (value: string | undefined) => (value ? undefined : "Required")
 
@@ -48,6 +53,7 @@ export default function Login() {
     <Redirect to="/" />
   ) : (
     <Card title="Login" overrides={cardOverrides}>
+      {apiError && <Toast kind={TOAST_KIND.negative}>{apiError}</Toast>}
       <Form
         onSubmit={values => dispatch(login(values))}
         render={p => (

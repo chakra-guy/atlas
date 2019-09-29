@@ -1,5 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { map, distinctUntilChanged } from "rxjs/operators"
+import { useObservable } from "rxjs-hooks"
 import {
   HeaderNavigation,
   ALIGN,
@@ -7,6 +9,8 @@ import {
   StyledNavigationList as NavList,
 } from "baseui/header-navigation"
 import { styled } from "baseui"
+
+import store$ from "../store$"
 
 const Container = styled(HeaderNavigation, p => ({
   paddingRight: p.$theme.sizing.scale800,
@@ -30,7 +34,14 @@ const MenuLink = styled(Link, p => ({
   },
 }))
 
+const view$ = store$.pipe(
+  map((state: any) => state.auth.isAuthenticated),
+  distinctUntilChanged(),
+)
+
 export default function Navbar() {
+  const isAuthenticated = useObservable(() => view$)
+
   return (
     <Container>
       <NavList $align={ALIGN.left}>
@@ -42,15 +53,20 @@ export default function Navbar() {
       <NavList $align={ALIGN.center} />
 
       <NavList $align={ALIGN.right}>
-        <NavItem>
-          <MenuLink to="/private">Private</MenuLink>
-        </NavItem>
-        <NavItem>
-          <MenuLink to="/login">Login</MenuLink>
-        </NavItem>
-        <NavItem>
-          <MenuLink to="/signup">Signup</MenuLink>
-        </NavItem>
+        {isAuthenticated ? (
+          <NavItem>
+            <MenuLink to="/private">Private</MenuLink>
+          </NavItem>
+        ) : (
+          <>
+            <NavItem>
+              <MenuLink to="/login">Login</MenuLink>
+            </NavItem>
+            <NavItem>
+              <MenuLink to="/signup">Signup</MenuLink>
+            </NavItem>
+          </>
+        )}
       </NavList>
     </Container>
   )

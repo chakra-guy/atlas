@@ -3,6 +3,7 @@ const initialState = {
   isAuthenticating: false,
   user: null,
   token: null,
+  error: null,
 }
 
 export const authReducer = (state = initialState, action: any) => {
@@ -11,6 +12,7 @@ export const authReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isAuthenticating: true,
+        error: null,
       }
     case "LOG_IN_SUCCESS":
       return {
@@ -24,6 +26,7 @@ export const authReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isAuthenticating: false,
+        error: action.payload.error,
       }
     default:
       return state

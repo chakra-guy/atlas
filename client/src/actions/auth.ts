@@ -18,8 +18,9 @@ export const loginSuccess = (payload: any) => ({
   payload,
 })
 
-export const loginFailed = () => ({
+export const loginFailed = (payload: any) => ({
   type: "LOG_IN_FAILED",
+  payload,
 })
 
 export const loginEpic = (action$: any) => {
@@ -32,9 +33,10 @@ export const loginEpic = (action$: any) => {
     switchMap((params: any) =>
       from(api.post("/login", params)).pipe(
         switchMap(({ data, meta }: any) => {
+          localStorage.setItem("token", meta.token)
           return of(loginSuccess({ user: data, token: meta.token }))
         }),
-        catchError(() => of(loginFailed())),
+        catchError(error => of(loginFailed(error))),
         startWith(loginStart()),
       ),
     ),
