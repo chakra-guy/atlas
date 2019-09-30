@@ -6,7 +6,7 @@ const initialState = {
   error: null,
 }
 
-export const authReducer = (state = initialState, action: any) => {
+export const sessionReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case "LOG_IN_START":
       return {

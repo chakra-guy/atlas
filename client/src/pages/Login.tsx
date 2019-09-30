@@ -10,7 +10,7 @@ import { Button, KIND } from "baseui/button"
 import { Toast, KIND as TOAST_KIND } from "baseui/toast"
 
 import store$, { dispatch } from "../store$"
-import { login } from "../actions/auth"
+import { login } from "../actions/session"
 
 const cardOverrides = {
   Root: {
@@ -27,7 +27,7 @@ const cardOverrides = {
 }
 
 const view$ = store$.pipe(
-  map((state: any) => state.auth),
+  map((state: any) => state.session),
   distinctUntilChanged(),
   tap(() => console.log("auth changed")),
 )

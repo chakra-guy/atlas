@@ -6,7 +6,7 @@ import { useObservable } from "rxjs-hooks"
 import store$ from "../store$"
 
 const view$ = store$.pipe(
-  map((state: any) => state.auth.isAuthenticated),
+  map((state: any) => state.session.isAuthenticated),
   distinctUntilChanged(),
 )
 

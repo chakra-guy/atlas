@@ -6,7 +6,7 @@ import { Home, Login, Signup, Private } from "./pages"
 import { PrivateRoute, Navbar } from "./components"
 import history from "./history"
 import { dispatch } from "./store$"
-import { loginSuccess } from "./actions/auth"
+import { loginSuccess } from "./actions/session"
 
 const Container = styled("div", {
   height: "100%",

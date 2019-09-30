@@ -5,9 +5,9 @@ import { ActionShape, Action$ } from "./types"
 import { combineReducers, createState } from "./utils/storeHelpers"
 
 import { mapReducer } from "./reducers/map"
-import { authReducer } from "./reducers/auth"
+import { sessionReducer } from "./reducers/session"
 import { fetchNearByPlacesEpic } from "./actions/map"
-import { loginEpic } from "./actions/auth"
+import { loginEpic } from "./actions/session"
 
 const createActionStream = () => new Subject<ActionShape>()
 const actionSubject$ = createActionStream()
@@ -25,7 +25,7 @@ export const runEpics = (stream$: Action$) => [
 
 const rootReducers = combineReducers({
   map: mapReducer,
-  auth: authReducer,
+  session: sessionReducer,
 })
 
 const store$ = createState((stream$: any) =>
