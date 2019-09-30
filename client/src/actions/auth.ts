@@ -33,8 +33,11 @@ export const loginEpic = (action$: any) => {
     switchMap((params: any) =>
       from(api.post("/login", params)).pipe(
         switchMap(({ data, meta }: any) => {
-          localStorage.setItem("token", meta.token)
-          return of(loginSuccess({ user: data, token: meta.token }))
+          const payload = { user: data, token: meta.token }
+
+          localStorage.setItem("token", JSON.stringify(payload))
+
+          return of(loginSuccess(payload))
         }),
         catchError(error => of(loginFailed(error))),
         startWith(loginStart()),

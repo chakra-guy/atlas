@@ -3,7 +3,7 @@ const API = process.env.REACT_APP_API_URL
 function headers() {
   let token: string | null = null
   try {
-    token = JSON.parse(localStorage.getItem("token") || "{}")
+    token = JSON.parse(localStorage.getItem("token") || "")
   } catch (error) {
     // ignore
   }
@@ -11,7 +11,7 @@ function headers() {
   return {
     Accept: "application/json",
     "Content-Type": "application/json",
-    Authorization: `Bearer: ${token}`,
+    Authorization: `Bearer ${token}`,
   }
 }
 

@@ -1,16 +1,27 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Router, Switch, Route } from "react-router-dom"
 import { styled } from "baseui"
 
 import { Home, Login, Signup, Private } from "./pages"
 import { PrivateRoute, Navbar } from "./components"
 import history from "./history"
+import { dispatch } from "./store$"
+import { loginSuccess } from "./actions/auth"
 
 const Container = styled("div", {
   height: "100%",
 })
 
 export default function App(): JSX.Element {
+  useEffect(() => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token") || "")
+      if (token) dispatch(loginSuccess(token))
+    } catch (error) {
+      // ignore
+    }
+  }, [])
+
   return (
     <Container>
       <Router history={history}>
