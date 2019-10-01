@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { map, distinctUntilChanged, tap } from "rxjs/operators"
 import { styled } from "baseui"
 import { useObservable } from "rxjs-hooks"
@@ -6,9 +6,12 @@ import { useObservable } from "rxjs-hooks"
 import { Map, PlacePanel } from "../components"
 import store$, { dispatch } from "../store$"
 import { setDistance, setGeo } from "../actions/map"
+import { Place } from "../types"
 
 const DistanceContainer = styled("div", p => ({
   position: "absolute",
+  bottom: "0",
+  right: "0",
   background: p.$theme.colors.mono100,
   margin: p.$theme.sizing.scale800,
   padding: p.$theme.sizing.scale500,
@@ -38,10 +41,11 @@ const initialState = {
 
 export default function Mainpage() {
   const { distance, places } = useObservable(() => view$, initialState)
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
 
   return (
     <>
-      <PlacePanel places={places} />
+      <PlacePanel selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
       <DistanceContainer>
         distance
         <input
@@ -53,6 +57,7 @@ export default function Mainpage() {
       <MapContainer>
         <Map
           places={places}
+          setSelectedPlace={setSelectedPlace}
           setCoordinatinates={(lat: number, lon: number) => dispatch(setGeo({ lat, lon }))}
         />
       </MapContainer>

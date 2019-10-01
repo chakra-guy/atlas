@@ -1,7 +1,6 @@
 import { from, of } from "rxjs"
 import { switchMap, catchError, map, distinctUntilChanged } from "rxjs/operators"
 
-import { ofType } from "../utils/operators$"
 import { api } from "../utils"
 
 export const setGeo = (payload: any) => ({

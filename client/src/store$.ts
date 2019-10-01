@@ -1,7 +1,7 @@
 import { Subject } from "rxjs"
 import { share, tap, scan, startWith } from "rxjs/operators"
 
-import { ActionShape, Action$ } from "./types"
+import { ActionShape } from "./types"
 import { combineReducers, createState } from "./utils/storeHelpers"
 
 import { mapReducer } from "./reducers/map"

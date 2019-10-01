@@ -4,7 +4,6 @@ import ReactMapGL, {
   GeolocateControl,
   ViewportChangeHandler,
   ViewState,
-  Popup,
 } from "react-map-gl"
 import { styled } from "baseui"
 
@@ -27,19 +26,13 @@ const MarkerIcon = styled("svg", p => ({
   transform: "translate(-10px, -20px)",
 }))
 
-const PopupContent = styled("div", {
-  display: "flex",
-  width: "240px",
-  height: "120px",
-})
-
 type Props = {
   places: Place[]
+  setSelectedPlace: (place: Place | null) => void
   setCoordinatinates: (lat: number, lon: number) => void
 }
 
-export default function Map({ places, setCoordinatinates }: Props): JSX.Element {
-  // const [popup, setPopup] = useState<any>({ open: false, place: {} })
+export default function Map({ places, setSelectedPlace, setCoordinatinates }: Props): JSX.Element {
   const [viewport, setViewport] = useState<ViewState>({
     latitude: 47.4979,
     longitude: 19.05465,
@@ -61,37 +54,15 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
       onViewportChange={handleViewportChange}
       width="100%"
       height="100%"
+      onClick={() => setSelectedPlace(null)}
     >
       {places.map(place => (
         <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
-          {/* <MarkerIcon viewBox="0 0 24 24" onClick={() => setPopup({ open: true, place })}> */}
-          <MarkerIcon
-            viewBox="0 0 24 24"
-            onClick={() => {
-              console.log("dispatch oen place panel")
-            }}
-          >
+          <MarkerIcon viewBox="0 0 24 24" onClick={() => setSelectedPlace(place)}>
             <path d={ICON} />
           </MarkerIcon>
         </Marker>
       ))}
-
-      {/* {popup.open && (
-        <Popup
-          latitude={popup.place.lat}
-          longitude={popup.place.lon}
-          closeButton
-          closeOnClick={false}
-          onClose={() => setPopup({ open: false, place: { lat: 0, lon: 0 } })}
-          anchor="bottom"
-        >
-          <PopupContent>
-            <img src={popup.place.logo} alt="company logo" />
-            <div>{popup.place.name}</div>
-            <div>{popup.place.rating}</div>
-          </PopupContent>
-        </Popup>
-      )} */}
 
       <GeolocateControl
         positionOptions={{ enableHighAccuracy: true }}
