@@ -3,7 +3,7 @@ import { map, distinctUntilChanged, tap } from "rxjs/operators"
 import { styled } from "baseui"
 import { useObservable } from "rxjs-hooks"
 
-import { Map, PlacePage } from "../components"
+import { Map, PlacePanel } from "../components"
 import store$, { dispatch } from "../store$"
 import { setDistance, setGeo } from "../actions/map"
 
@@ -41,7 +41,7 @@ export default function Mainpage() {
 
   return (
     <>
-      <PlacePage places={places} />
+      <PlacePanel places={places} />
       <DistanceContainer>
         distance
         <input

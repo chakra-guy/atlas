@@ -5,7 +5,7 @@ type Props = {
   places: Place[]
 }
 
-export default function PlacePage(props: Props) {
+export default function PlacePanel(props: Props) {
   const { places } = props
   console.log("places", places)
 
