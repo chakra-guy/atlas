@@ -1,5 +1,5 @@
 import { from, of } from "rxjs"
-import { switchMap, catchError, map } from "rxjs/operators"
+import { switchMap, catchError, map, distinctUntilChanged } from "rxjs/operators"
 
 import { ofType } from "../utils/operators$"
 import { api } from "../utils"
@@ -24,15 +24,16 @@ export const fetchNearByPlaces = (payload: any) => ({
   payload,
 })
 
-// FIXME could be using just state$ here
-export const fetchNearByPlacesEpic = (action$: any) => {
-  return action$.pipe(
-    ofType<any>("FETCH_NEAR_BY_PLACES"),
-    map(({ payload }: any) => ({
-      "place[lat]": payload.geo.lat,
-      "place[lon]": payload.geo.lon,
-      "place[distance]": payload.distance,
+export const fetchNearByPlacesEpic = (_action$: any, store$: any) => {
+  return store$.pipe(
+    map((state: any) => ({
+      lat: state.map.geo.lat,
+      lon: state.map.geo.lon,
+      distance: state.map.distance,
     })),
+    distinctUntilChanged((prev: any, curr: any) => {
+      return prev.lat === curr.lat && prev.lon === curr.lon && prev.distance === curr.distance
+    }),
     switchMap((params: any) =>
       from(api.get("/places", params)).pipe(
         switchMap((res: any) => of(setFixmePlaces(res.data))),

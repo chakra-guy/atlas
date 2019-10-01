@@ -1,11 +1,11 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { map, distinctUntilChanged, tap } from "rxjs/operators"
 import { styled } from "baseui"
 import { useObservable } from "rxjs-hooks"
 
-import { Map } from "../components"
+import { Map, PlacePage } from "../components"
 import store$, { dispatch } from "../store$"
-import { setDistance, setGeo, fetchNearByPlaces } from "../actions/map"
+import { setDistance, setGeo } from "../actions/map"
 
 const DistanceContainer = styled("div", p => ({
   position: "absolute",
@@ -37,15 +37,11 @@ const initialState = {
 }
 
 export default function Mainpage() {
-  const { geo, distance, places } = useObservable(() => view$, initialState)
-
-  useEffect(() => {
-    // FIXME this whole thing could be in rxjs
-    dispatch(fetchNearByPlaces({ geo, distance }))
-  }, [geo, distance])
+  const { distance, places } = useObservable(() => view$, initialState)
 
   return (
     <>
+      <PlacePage places={places} />
       <DistanceContainer>
         distance
         <input

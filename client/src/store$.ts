@@ -18,9 +18,10 @@ export const dispatch = (action: ActionShape) => {
   actionSubject$.next(action)
 }
 
-export const runEpics = (stream$: Action$) => [
-  fetchNearByPlacesEpic(stream$).subscribe(dispatch),
-  loginEpic(stream$).subscribe(dispatch),
+// FIXME arg spreading with ts
+export const runEpics = (...stream$: any) => [
+  fetchNearByPlacesEpic(stream$[0], stream$[1]).subscribe(dispatch),
+  loginEpic(stream$[0]).subscribe(dispatch),
 ]
 
 const rootReducers = combineReducers({

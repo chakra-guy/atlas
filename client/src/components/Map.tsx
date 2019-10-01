@@ -39,7 +39,7 @@ type Props = {
 }
 
 export default function Map({ places, setCoordinatinates }: Props): JSX.Element {
-  const [popup, setPopup] = useState<any>({ open: false, place: {} })
+  // const [popup, setPopup] = useState<any>({ open: false, place: {} })
   const [viewport, setViewport] = useState<ViewState>({
     latitude: 47.4979,
     longitude: 19.05465,
@@ -64,13 +64,19 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
     >
       {places.map(place => (
         <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
-          <MarkerIcon viewBox="0 0 24 24" onClick={() => setPopup({ open: true, place })}>
+          {/* <MarkerIcon viewBox="0 0 24 24" onClick={() => setPopup({ open: true, place })}> */}
+          <MarkerIcon
+            viewBox="0 0 24 24"
+            onClick={() => {
+              console.log("dispatch oen place panel")
+            }}
+          >
             <path d={ICON} />
           </MarkerIcon>
         </Marker>
       ))}
 
-      {popup.open && (
+      {/* {popup.open && (
         <Popup
           latitude={popup.place.lat}
           longitude={popup.place.lon}
@@ -85,7 +91,7 @@ export default function Map({ places, setCoordinatinates }: Props): JSX.Element 
             <div>{popup.place.rating}</div>
           </PopupContent>
         </Popup>
-      )}
+      )} */}
 
       <GeolocateControl
         positionOptions={{ enableHighAccuracy: true }}
