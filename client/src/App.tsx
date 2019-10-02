@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { Router, Switch, Route } from "react-router-dom"
 import { styled } from "baseui"
 
-import { Home, Login, Signup, Private } from "./pages"
+import { Home, Login, Signup, Account } from "./pages"
 import { PrivateRoute, Navbar } from "./components"
 import history from "./history"
 import { dispatch } from "./store$"
@@ -32,7 +32,7 @@ export default function App(): JSX.Element {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <PrivateRoute path="/private" component={Private} />
+            <PrivateRoute path="/account" component={Account} />
           </>
         </Switch>
       </Router>

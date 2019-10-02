@@ -3,6 +3,7 @@
 - figure out what to do with "explicit-function-return-type" rule
 - add transition to map markers to make it look like it loads faster
 - rewrite session/auth with proper logout and refresh
+- fix warning is console
 
 # API
 

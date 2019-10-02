@@ -2,13 +2,13 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { map, distinctUntilChanged } from "rxjs/operators"
 import { useObservable } from "rxjs-hooks"
+import { styled } from "baseui"
 import {
   HeaderNavigation,
   ALIGN,
   StyledNavigationItem as NavItem,
   StyledNavigationList as NavList,
 } from "baseui/header-navigation"
-import { styled } from "baseui"
 
 import store$ from "../store$"
 
@@ -35,12 +35,20 @@ const MenuLink = styled(Link, p => ({
 }))
 
 const view$ = store$.pipe(
-  map((state: any) => state.session.isAuthenticated),
+  map((state: any) => state.session),
+  map(({ isAuthenticated, user }: any) => ({ isAuthenticated, user })),
   distinctUntilChanged(),
 )
 
+const initialState = {
+  isAuthenticated: false,
+  user: {
+    username: "",
+  },
+}
+
 export default function Navbar() {
-  const isAuthenticated = useObservable(() => view$)
+  const { isAuthenticated, user } = useObservable(() => view$, initialState)
 
   return (
     <Container>
@@ -55,7 +63,7 @@ export default function Navbar() {
       <NavList $align={ALIGN.right}>
         {isAuthenticated ? (
           <NavItem>
-            <MenuLink to="/private">Private</MenuLink>
+            <MenuLink to="/account">@{user.username}</MenuLink>
           </NavItem>
         ) : (
           <>
