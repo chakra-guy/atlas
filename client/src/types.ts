@@ -7,6 +7,9 @@ export type Place = {
   name: string
   lat: number
   lon: number
+  logo: string
+  rating: number
+  website: string
 }
 
 // Prototype types

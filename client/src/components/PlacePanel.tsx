@@ -1,15 +1,19 @@
 import React from "react"
 import { styled } from "baseui"
 import { Theme } from "baseui/theme"
+import { H4 } from "baseui/typography"
+import { StarRating } from "baseui/rating"
+import { StyledLink } from "baseui/link"
+import { AspectRatioBox, AspectRatioBoxBody } from "baseui/aspect-ratio-box"
 
 import { Place } from "../types"
 
 type CustomTheme = Theme & { $isOpen: boolean }
 
-// FIXME scroll issue
+// FIXME scroll & zoom issue
 // TODO use $theme values
 const Panel = styled<{ $isOpen: boolean }, "div", CustomTheme>("div", p => ({
-  position: "absolute",
+  position: "fixed",
   zIndex: p.$theme.zIndex.modal,
   backgroundColor: p.$theme.colors.mono100,
   padding: "24px",
@@ -38,21 +42,71 @@ const Panel = styled<{ $isOpen: boolean }, "div", CustomTheme>("div", p => ({
     marginTop: "72px",
     marginBottom: "24px",
     borderRadius: "12px",
-    backgroundColor: "white",
   },
 }))
+
+const Header = styled("div", {
+  display: "flex",
+  alignItems: "center",
+})
+
+const HeaderContent = styled("div", {
+  paddingLeft: "24px",
+  display: "grid",
+  gridGap: "8px",
+})
+
+const LogoOverrides = {
+  Block: {
+    props: {
+      onLoad: () => console.log("loaded"),
+    },
+    style: {
+      width: "100%",
+      height: "100%",
+      borderRadius: "4px",
+      "object-fit": "cover",
+    },
+  },
+}
+
+const PlaceNameOverrides = {
+  Block: {
+    style: {
+      lineHeight: "1",
+      margin: "0",
+    },
+  },
+}
 
 type Props = {
   selectedPlace: Place | null
   setSelectedPlace: (place: Place | null) => void
 }
 
-export default function PlacePanel(props: Props) {
+export default function PlacePanel(props: Props): JSX.Element {
   const { selectedPlace } = props
 
   return (
     <Panel $isOpen={!!selectedPlace}>
-      {<pre>{JSON.stringify(selectedPlace, undefined, 2)}</pre>}
+      {/* FIXME dont do this, fix animation in a different way */}
+      {selectedPlace && (
+        <>
+          <Header>
+            <AspectRatioBox width="scale2400">
+              <AspectRatioBoxBody as="img" src={selectedPlace.logo} overrides={LogoOverrides} />
+            </AspectRatioBox>
+            <HeaderContent>
+              <H4 overrides={PlaceNameOverrides}>{selectedPlace.name}</H4>
+              <StyledLink href={selectedPlace.website} target="_blank">
+                {selectedPlace.website}
+              </StyledLink>
+              <StarRating value={selectedPlace.rating} />
+            </HeaderContent>
+          </Header>
+        </>
+      )}
+      {<pre style={{ overflow: "hidden" }}>{JSON.stringify(selectedPlace, undefined, 2)}</pre>}
     </Panel>
   )
 }

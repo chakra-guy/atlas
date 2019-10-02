@@ -42,7 +42,7 @@ export default function Map({ places, setSelectedPlace, setCoordinatinates }: Pr
   const updateCoordinatinates = useDebouncedCallback(setCoordinatinates, 250)
 
   const handleViewportChange: ViewportChangeHandler = viewState => {
-    setViewport(state => ({ ...state, ...viewState }))
+    setViewport(viewState)
     updateCoordinatinates(viewState.latitude, viewState.longitude)
   }
 
