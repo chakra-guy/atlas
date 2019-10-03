@@ -14,7 +14,7 @@ import store$ from "../store$"
 
 const Container = styled(HeaderNavigation, p => ({
   paddingRight: p.$theme.sizing.scale800,
-  height: "28px",
+  height: p.$theme.sizing.scale800,
   border: 0,
 }))
 

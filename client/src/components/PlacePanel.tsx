@@ -21,7 +21,7 @@ const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
   backgroundColor: p.$theme.colors.mono100,
   padding: "0",
   borderRadius: "8px 8px 0 0",
-  boxShadow: "0px -3px 14px -3px rgba(0, 0, 0, 0.8)",
+  boxShadow: p.$theme.lighting.shadow700,
   transition: `all ${p.$theme.animation.timing100} ${p.$theme.animation.easeInOutCurve}`,
   height: "320px",
   maxWidth: "360px",
@@ -42,36 +42,36 @@ const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
     top: "0",
     bottom: "0",
     right: "unset",
-    marginLeft: "24px",
+    marginLeft: p.$theme.sizing.scale800,
     marginRight: "0",
-    marginTop: "72px",
-    marginBottom: "24px",
+    marginTop: p.$theme.sizing.scale1600,
+    marginBottom: p.$theme.sizing.scale800,
     borderRadius: "8px",
   },
 }))
 
-const PanelInside = styled("div", {
+const PanelInside = styled("div", p => ({
   overflow: "auto",
   height: "100%",
-  padding: "24px",
-})
+  padding: p.$theme.sizing.scale800,
+}))
 
 const Container = styled<{ $row?: boolean }, "div", ContainerTheme>("div", p => ({
   display: "flex",
-  marginBottom: "12px",
   flexDirection: p.$row ? "row" : "column",
+  marginBottom: p.$theme.sizing.scale500,
 }))
 
-const HeaderContent = styled("div", {
-  paddingLeft: "24px",
+const HeaderContent = styled("div", p => ({
   display: "grid",
-  gridGap: "8px",
-})
+  gridGap: p.$theme.sizing.scale300,
+  paddingLeft: p.$theme.sizing.scale800,
+}))
 
 const LogoOverrides = {
   Block: {
     props: {
-      onLoad: () => console.log("loaded"),
+      onLoad: () => console.log("loaded"), // FIXME
     },
     style: {
       width: "100%",
@@ -93,9 +93,9 @@ const PlaceNameOverrides = {
 
 const ReviewsTitleOverrides = {
   Block: {
-    style: {
-      margin: "12px 0",
-    },
+    style: (p: any) => ({
+      margin: `${p.$theme.sizing.scale500} 0`,
+    }),
   },
 }
 

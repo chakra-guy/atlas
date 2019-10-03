@@ -21,7 +21,7 @@ const DistanceContainer = styled("div", p => ({
 }))
 
 const MapContainer = styled("div", p => ({
-  height: "calc(100% - 52px)",
+  height: "calc(100% - 48px)",
   width: "100%",
   backgroundColor: p.$theme.colors.mono100,
 }))

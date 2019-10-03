@@ -6,6 +6,7 @@
 - rewrite session/auth with proper logout and refresh
 - fix warning is console
 - calc distance from MapGL zoom level
+- finish signup page
 
 # API
 
