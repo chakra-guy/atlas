@@ -12,18 +12,16 @@ export type Place = {
   website: string
 }
 
-// Prototype types
-
 export type ActionType = string
 
 export type Action<TPayload> = {
   type: ActionType
 } & TPayload
 
-export type SomePayload = {
+export type Payload = {
   [key: string]: any
 }
 
-export type ActionShape = Action<SomePayload>
+export type ActionShape = Action<Payload>
 
 export type Action$ = Observable<ActionShape>

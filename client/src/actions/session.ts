@@ -1,7 +1,7 @@
 import { of, from } from "rxjs"
 
 import { map, switchMap, catchError, startWith } from "rxjs/operators"
-import { ofType } from "../__prototype/operators"
+import { ofType } from "../utils/operators$"
 import { api } from "../utils"
 
 export const login = (payload: any) => ({
