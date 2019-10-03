@@ -14,6 +14,8 @@ import store$ from "../store$"
 
 const Container = styled(HeaderNavigation, p => ({
   paddingRight: p.$theme.sizing.scale800,
+  height: "28px",
+  border: 0,
 }))
 
 const LogoLink = styled(Link, p => ({

@@ -1,26 +1,30 @@
-import React from "react"
+import React, { useState } from "react"
 import { styled } from "baseui"
 import { Theme } from "baseui/theme"
-import { H4 } from "baseui/typography"
+import { H4, H6 } from "baseui/typography"
 import { StarRating } from "baseui/rating"
 import { StyledLink } from "baseui/link"
 import { AspectRatioBox, AspectRatioBoxBody } from "baseui/aspect-ratio-box"
+import { FormControl } from "baseui/form-control"
+import { Textarea } from "baseui/textarea"
+import { Button } from "baseui/button"
 
 import { Place } from "../types"
 
-type CustomTheme = Theme & { $isOpen: boolean }
+type PanelTheme = Theme & { $isOpen: boolean }
+type ContainerTheme = Theme & { $row: boolean }
 
-// FIXME scroll & zoom issue
 // TODO use $theme values
-const Panel = styled<{ $isOpen: boolean }, "div", CustomTheme>("div", p => ({
+const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
   position: "fixed",
   zIndex: p.$theme.zIndex.modal,
   backgroundColor: p.$theme.colors.mono100,
-  padding: "24px",
-  borderRadius: "12px 12px 0 0",
+  padding: "0",
+  borderRadius: "8px 8px 0 0",
   boxShadow: "0px -3px 14px -3px rgba(0, 0, 0, 0.8)",
   transition: `all ${p.$theme.animation.timing100} ${p.$theme.animation.easeInOutCurve}`,
-  maxWidth: "320px",
+  height: "320px",
+  maxWidth: "360px",
   bottom: p.$isOpen ? "0" : "-120px",
   opacity: p.$isOpen ? 1 : 0,
   left: "0",
@@ -32,7 +36,8 @@ const Panel = styled<{ $isOpen: boolean }, "div", CustomTheme>("div", p => ({
 
   // FIXME add media to theme.js and here
   "@media screen and (min-width: 1136px)": {
-    width: "320px",
+    height: "unset",
+    width: "360px",
     left: p.$isOpen ? "0" : "-120px",
     top: "0",
     bottom: "0",
@@ -41,14 +46,21 @@ const Panel = styled<{ $isOpen: boolean }, "div", CustomTheme>("div", p => ({
     marginRight: "0",
     marginTop: "72px",
     marginBottom: "24px",
-    borderRadius: "12px",
+    borderRadius: "8px",
   },
 }))
 
-const Header = styled("div", {
-  display: "flex",
-  alignItems: "center",
+const PanelInside = styled("div", {
+  overflow: "auto",
+  height: "100%",
+  padding: "24px",
 })
+
+const Container = styled<{ $row?: boolean }, "div", ContainerTheme>("div", p => ({
+  display: "flex",
+  marginBottom: "12px",
+  flexDirection: p.$row ? "row" : "column",
+}))
 
 const HeaderContent = styled("div", {
   paddingLeft: "24px",
@@ -79,6 +91,14 @@ const PlaceNameOverrides = {
   },
 }
 
+const ReviewsTitleOverrides = {
+  Block: {
+    style: {
+      margin: "12px 0",
+    },
+  },
+}
+
 type Props = {
   selectedPlace: Place | null
   setSelectedPlace: (place: Place | null) => void
@@ -86,13 +106,14 @@ type Props = {
 
 export default function PlacePanel(props: Props): JSX.Element {
   const { selectedPlace } = props
+  const [review, setReview] = useState("")
 
   return (
     <Panel $isOpen={!!selectedPlace}>
       {/* FIXME dont do this, fix animation in a different way */}
       {selectedPlace && (
-        <>
-          <Header>
+        <PanelInside>
+          <Container $row>
             <AspectRatioBox width="scale2400">
               <AspectRatioBoxBody as="img" src={selectedPlace.logo} overrides={LogoOverrides} />
             </AspectRatioBox>
@@ -103,10 +124,34 @@ export default function PlacePanel(props: Props): JSX.Element {
               </StyledLink>
               <StarRating value={selectedPlace.rating} />
             </HeaderContent>
-          </Header>
-        </>
+          </Container>
+          <Container>
+            <H6 overrides={ReviewsTitleOverrides}>Reviews</H6>
+            <FormControl>
+              <Textarea
+                id="textarea-id"
+                placeholder="Leave a review"
+                rows={2}
+                value={review}
+                onChange={e => setReview(e.currentTarget.value)}
+              />
+            </FormControl>
+            {!!review.trim() && (
+              <Button size="compact" onClick={() => {}}>
+                Submit Review
+              </Button>
+            )}
+            <ul>
+              <li>comment 1</li>
+              <li>comment 2</li>
+              <li>comment 3</li>
+              <li>comment 4</li>
+              <li>comment 5</li>
+            </ul>
+          </Container>
+          {<pre style={{ overflow: "hidden" }}>{JSON.stringify(selectedPlace, undefined, 2)}</pre>}
+        </PanelInside>
       )}
-      {<pre style={{ overflow: "hidden" }}>{JSON.stringify(selectedPlace, undefined, 2)}</pre>}
     </Panel>
   )
 }

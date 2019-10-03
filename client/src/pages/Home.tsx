@@ -21,7 +21,7 @@ const DistanceContainer = styled("div", p => ({
 }))
 
 const MapContainer = styled("div", p => ({
-  height: "100%",
+  height: "calc(100% - 52px)",
   width: "100%",
   backgroundColor: p.$theme.colors.mono100,
 }))
@@ -51,7 +51,7 @@ export default function Mainpage() {
         <input
           type="text"
           value={distance}
-          onChange={e => dispatch(setDistance(+e.target.value))}
+          onChange={e => dispatch(setDistance(+e.currentTarget.value))}
         />
       </DistanceContainer>
       <MapContainer>

@@ -2,8 +2,10 @@
 
 - figure out what to do with "explicit-function-return-type" rule
 - add transition to map markers to make it look like it loads faster
+- add loading indicator for places endpoint
 - rewrite session/auth with proper logout and refresh
 - fix warning is console
+- calc distance from MapGL zoom level
 
 # API
 

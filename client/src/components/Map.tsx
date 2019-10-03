@@ -51,6 +51,7 @@ export default function Map({ places, setSelectedPlace, setCoordinatinates }: Pr
       {...viewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
       mapStyle="mapbox://styles/mapbox/dark-v9"
+      // mapStyle="mapbox://styles/mapbox/streets-v9"
       onViewportChange={handleViewportChange}
       width="100%"
       height="100%"
