@@ -18,9 +18,10 @@ const cardOverrides = {
   Root: {
     style: (p: any) => ({
       boxShadow: p.$theme.lighting.overlay0,
-      border: 0,
+      borderWidth: 0,
 
       "@media screen and (min-width: 600px)": {
+        paddingTop: p.$theme.sizing.scale900,
         width: "480px",
         margin: "auto",
       },
