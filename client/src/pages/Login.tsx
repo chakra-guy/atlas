@@ -1,6 +1,6 @@
 import React from "react"
 import { Redirect } from "react-router-dom"
-import { map, distinctUntilChanged, tap } from "rxjs/operators"
+import { map, distinctUntilChanged } from "rxjs/operators"
 import { useObservable } from "rxjs-hooks"
 import { Form, Field } from "react-final-form"
 import { FormControl } from "baseui/form-control"
@@ -9,8 +9,10 @@ import { Input, SIZE } from "baseui/input"
 import { Button, KIND } from "baseui/button"
 import { Toast, KIND as TOAST_KIND } from "baseui/toast"
 
-import store$, { dispatch } from "../store$"
+import store$, { RootState } from "../store$"
+import { dispatch } from "../action$"
 import { login } from "../actions/session"
+import { Credentials } from "../types"
 
 const cardOverrides = {
   Root: {
@@ -27,13 +29,11 @@ const cardOverrides = {
 }
 
 const view$ = store$.pipe(
-  map((state: any) => state.session),
+  map((state: RootState) => state.session),
   distinctUntilChanged(),
-  tap(() => console.log("auth changed")),
 )
 
-// FIXME
-const initialState = {
+const initialValues = {
   isAuthenticated: false,
   isAuthenticating: false,
   user: null,
@@ -44,7 +44,7 @@ const initialState = {
 export default function Login() {
   const { isAuthenticated, isAuthenticating, error: apiError } = useObservable(
     () => view$,
-    initialState,
+    initialValues,
   )
 
   const required = (value: string | undefined) => (value ? undefined : "Required")
@@ -55,7 +55,7 @@ export default function Login() {
     <Card title="Login" overrides={cardOverrides}>
       {apiError && <Toast kind={TOAST_KIND.negative}>{apiError}</Toast>}
       <Form
-        onSubmit={values => dispatch(login(values))}
+        onSubmit={(values: Credentials) => dispatch(login(values))}
         render={p => (
           <form onSubmit={p.handleSubmit}>
             <Field

@@ -1,40 +1,26 @@
-import { Subject } from "rxjs"
-import { share, tap, scan, startWith } from "rxjs/operators"
+import { tap, scan, startWith } from "rxjs/operators"
 
-import { ActionShape } from "./types"
+import action$ from "./action$"
+import { Action$ } from "./types"
 import { combineReducers, createState } from "./utils/storeHelpers"
 
 import { mapReducer } from "./reducers/map"
 import { sessionReducer } from "./reducers/session"
-import { fetchNearByPlacesEpic } from "./actions/map"
-import { loginEpic } from "./actions/session"
 
-const createActionStream = () => new Subject<ActionShape>()
-const actionSubject$ = createActionStream()
-
-export const action$ = actionSubject$.pipe(share())
-
-export const dispatch = (action: ActionShape) => {
-  actionSubject$.next(action)
-}
-
-// FIXME arg spreading with ts
-export const runEpics = (...stream$: any) => [
-  fetchNearByPlacesEpic(stream$[0], stream$[1]).subscribe(dispatch),
-  loginEpic(stream$[0]).subscribe(dispatch),
-]
-
-const rootReducers = combineReducers({
+const rootReducer = combineReducers({
   map: mapReducer,
   session: sessionReducer,
 })
 
-const store$ = createState((stream$: any) =>
+const store$ = createState((stream$: Action$) =>
   stream$.pipe(
     startWith(undefined, { type: "INIT_STATE" }),
-    scan(rootReducers),
-    tap((state: any) => console.log("STATE", state)),
+    scan(rootReducer),
+    tap((state: RootState) => console.log("STORE", state)),
   ),
 )
+
+export type RootState = ReturnType<typeof rootReducer>
+export type Store$ = ReturnType<typeof store$>
 
 export default store$(action$)

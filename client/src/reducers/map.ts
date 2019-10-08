@@ -1,10 +1,12 @@
+import { Action, mapState } from "../types"
+
 const initialState = {
   geo: { lat: 47.497903, lon: 19.054647 },
   distance: 250,
   places: [],
 }
 
-export const mapReducer = (state = initialState, action: any) => {
+export const mapReducer = (state: mapState = initialState, action: Action<any>) => {
   switch (action.type) {
     case "SET_GEO":
       return {
@@ -16,7 +18,7 @@ export const mapReducer = (state = initialState, action: any) => {
         ...state,
         distance: action.payload,
       }
-    case "SET_FIXME_PLACES":
+    case "SET_PLACES":
       return {
         ...state,
         places: action.payload,

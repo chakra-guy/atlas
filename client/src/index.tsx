@@ -8,7 +8,9 @@ import { LightTheme, BaseProvider } from "baseui"
 import "./index.css"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
-import store$, { runEpics, action$ } from "./store$"
+import store$ from "./store$"
+import action$ from "./action$"
+import runEpics from "./epics"
 
 const engine = new Styletron()
 

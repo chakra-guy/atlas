@@ -32,14 +32,14 @@ function queryString(params: any) {
 }
 
 export default {
-  get(url: any, params = {}) {
+  get(url: string, params = {}) {
     return fetch(`${API}${url}${queryString(params)}`, {
       method: "GET",
       headers: headers(),
     }).then(parseResponse)
   },
 
-  post(url: any, data: any) {
+  post(url: string, data: any) {
     const body = JSON.stringify(data)
 
     return fetch(`${API}${url}`, {
@@ -49,7 +49,7 @@ export default {
     }).then(parseResponse)
   },
 
-  patch(url: any, data: any) {
+  patch(url: string, data: any) {
     const body = JSON.stringify(data)
 
     return fetch(`${API}${url}`, {
@@ -59,7 +59,7 @@ export default {
     }).then(parseResponse)
   },
 
-  delete(url: any) {
+  delete(url: string) {
     return fetch(`${API}${url}`, {
       method: "DELETE",
       headers: headers(),

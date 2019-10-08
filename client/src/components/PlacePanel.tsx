@@ -14,7 +14,6 @@ import { Place } from "../types"
 type PanelTheme = Theme & { $isOpen: boolean }
 type ContainerTheme = Theme & { $row: boolean }
 
-// TODO use $theme values
 const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
   position: "fixed",
   zIndex: p.$theme.zIndex.modal,

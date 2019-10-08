@@ -1,14 +1,14 @@
-import React, { useState } from "react"
+import React, { useState, FormEvent } from "react"
 import { FormControl } from "baseui/form-control"
 import { Card } from "baseui/card"
 import { Input } from "baseui/input"
 import { Button, KIND } from "baseui/button"
 
-export default function Signup() {
+export default function Signup(): JSX.Element {
   const [loginValue, setLoginValue] = useState("")
   const [passwordValue, setPasswordValue] = useState("")
 
-  const handleSubmit = (e: React.SyntheticEvent<EventTarget>) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     console.log("submitted")
   }

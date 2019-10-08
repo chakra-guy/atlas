@@ -2,6 +2,7 @@ import { Observable } from "rxjs"
 import { shareReplay } from "rxjs/operators"
 
 import { catchErrorLogAndContinue } from "./operators$"
+import { Action } from "../types"
 
 export const createState = (createStream: any) => {
   return (...streams: Observable<any>[]) => {
@@ -16,7 +17,7 @@ export const combineReducers = (reducers: any) => {
   // First get an array with all the keys of the reducers (the reducer names)
   const reducerKeys = Object.keys(reducers)
 
-  return (state: any = {}, action: any) => {
+  return (state: any = {}, action: Action<any>) => {
     // This is the object we are going to return.
     const nextState: any = {}
 

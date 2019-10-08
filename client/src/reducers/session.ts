@@ -1,18 +1,16 @@
+import { Action, sessionState } from "../types"
+
 const initialState = {
   isAuthenticated: false,
   isAuthenticating: false,
-  user: null,
-  token: null,
-  error: null,
 }
 
-export const sessionReducer = (state = initialState, action: any) => {
+export const sessionReducer = (state: sessionState = initialState, action: Action<any>) => {
   switch (action.type) {
     case "LOG_IN_START":
       return {
-        ...state,
+        ...initialState,
         isAuthenticating: true,
-        error: null,
       }
     case "LOG_IN_SUCCESS":
       return {

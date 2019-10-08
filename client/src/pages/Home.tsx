@@ -1,11 +1,12 @@
 import React, { useState } from "react"
-import { map, distinctUntilChanged, tap } from "rxjs/operators"
+import { map, distinctUntilChanged } from "rxjs/operators"
 import { styled } from "baseui"
 import { useObservable } from "rxjs-hooks"
 
-import { Map, PlacePanel } from "../components"
-import store$, { dispatch } from "../store$"
+import store$, { RootState } from "../store$"
+import { dispatch } from "../action$"
 import { setDistance, setGeo } from "../actions/map"
+import { Map, PlacePanel } from "../components"
 import { Place } from "../types"
 
 const DistanceContainer = styled("div", p => ({
@@ -27,20 +28,17 @@ const MapContainer = styled("div", p => ({
 }))
 
 const view$ = store$.pipe(
-  map((state: any) => state.map),
+  map((state: RootState) => state.map),
   distinctUntilChanged(),
-  tap(() => console.log("map changed")),
 )
 
-// FIXME remove this
-const initialState = {
-  geo: { lat: 47.497903, lon: 19.054647 },
-  distance: 250,
+const initialValues = {
+  distance: 750,
   places: [],
 }
 
 export default function Mainpage() {
-  const { distance, places } = useObservable(() => view$, initialState)
+  const { distance, places } = useObservable(() => view$, initialValues)
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
 
   return (

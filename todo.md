@@ -7,6 +7,7 @@
 - fix warning is console
 - calc distance from MapGL zoom level
 - finish signup page
+- check my typescript config
 
 # API
 

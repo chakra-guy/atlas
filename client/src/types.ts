@@ -1,6 +1,14 @@
 import { Observable } from "rxjs"
 
-// App types
+export type User = {
+  id: number
+  username: string
+}
+
+export type Credentials = {
+  username: string
+  password: string
+}
 
 export type Place = {
   id: number
@@ -10,6 +18,25 @@ export type Place = {
   logo: string
   rating: number
   website: string
+}
+
+export type Geo = {
+  lat: number
+  lon: number
+}
+
+export type mapState = {
+  geo: Geo
+  distance: number
+  places: Place[]
+}
+
+export type sessionState = {
+  isAuthenticated: boolean
+  isAuthenticating: boolean
+  user?: User
+  token?: string
+  error?: string
 }
 
 export type ActionType = string

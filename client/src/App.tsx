@@ -5,7 +5,7 @@ import { styled } from "baseui"
 import { Home, Login, Signup, Account } from "./pages"
 import { PrivateRoute, Navbar } from "./components"
 import history from "./history"
-import { dispatch } from "./store$"
+import { dispatch } from "./action$"
 import { loginSuccess } from "./actions/session"
 
 const Container = styled("div", {
