@@ -1,6 +1,6 @@
 import React from "react"
 import { Redirect } from "react-router-dom"
-import { map, distinctUntilChanged } from "rxjs/operators"
+import { pluck, distinctUntilChanged } from "rxjs/operators"
 import { useObservable } from "rxjs-hooks"
 import { Form, Field } from "react-final-form"
 import { FormControl } from "baseui/form-control"
@@ -9,7 +9,7 @@ import { Input, SIZE } from "baseui/input"
 import { Button, KIND } from "baseui/button"
 import { Toast, KIND as TOAST_KIND } from "baseui/toast"
 
-import store$, { RootState } from "../store$"
+import store$ from "../store$"
 import { dispatch } from "../action$"
 import { login } from "../actions/session"
 import { Credentials } from "../types"
@@ -30,7 +30,7 @@ const cardOverrides = {
 }
 
 const view$ = store$.pipe(
-  map((state: RootState) => state.session),
+  pluck("session"),
   distinctUntilChanged(),
 )
 

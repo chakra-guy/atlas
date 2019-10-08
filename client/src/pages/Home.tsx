@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { map, distinctUntilChanged } from "rxjs/operators"
+import { pluck, distinctUntilChanged } from "rxjs/operators"
 import { styled } from "baseui"
 import { useObservable } from "rxjs-hooks"
 
-import store$, { RootState } from "../store$"
+import store$ from "../store$"
 import { dispatch } from "../action$"
 import { setDistance, setGeo } from "../actions/map"
 import { Map, PlacePanel } from "../components"
@@ -28,7 +28,7 @@ const MapContainer = styled("div", p => ({
 }))
 
 const view$ = store$.pipe(
-  map((state: RootState) => state.map),
+  pluck("map"),
   distinctUntilChanged(),
 )
 

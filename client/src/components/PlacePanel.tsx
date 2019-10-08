@@ -15,6 +15,10 @@ type PanelTheme = Theme & { $isOpen: boolean }
 type ContainerTheme = Theme & { $row: boolean }
 
 const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
+  bottom: p.$isOpen ? "0" : "-120px",
+  opacity: p.$isOpen ? 1 : 0,
+  pointerEvents: p.$isOpen ? "all" : "none",
+
   position: "fixed",
   zIndex: p.$theme.zIndex.modal,
   backgroundColor: p.$theme.colors.mono100,
@@ -24,8 +28,6 @@ const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
   transition: `all ${p.$theme.animation.timing100} ${p.$theme.animation.easeInOutCurve}`,
   height: "320px",
   maxWidth: "360px",
-  bottom: p.$isOpen ? "0" : "-120px",
-  opacity: p.$isOpen ? 1 : 0,
   left: "0",
   right: "0",
   marginLeft: "auto",
@@ -35,9 +37,10 @@ const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
 
   // FIXME add media to theme.js and here
   "@media screen and (min-width: 1136px)": {
+    left: p.$isOpen ? "0" : "-120px",
+
     height: "unset",
     width: "360px",
-    left: p.$isOpen ? "0" : "-120px",
     top: "0",
     bottom: "0",
     right: "unset",
