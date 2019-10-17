@@ -2,7 +2,7 @@ import React from "react"
 import { Redirect } from "react-router-dom"
 import { pluck, distinctUntilChanged } from "rxjs/operators"
 import { useObservable } from "rxjs-hooks"
-import { Form, Field } from "react-final-form"
+import useForm from "react-hook-form"
 import { FormControl } from "baseui/form-control"
 import { Card } from "baseui/card"
 import { Input, SIZE } from "baseui/input"
@@ -48,58 +48,48 @@ export default function Login() {
     initialValues,
   )
 
-  const required = (value: string | undefined) => (value ? undefined : "Required")
+  const { register, handleSubmit, errors } = useForm<Credentials>()
+
+  const submit = (values: Credentials) => dispatch(login(values))
 
   return isAuthenticated ? (
     <Redirect to="/" />
   ) : (
     <Card title="Login" overrides={cardOverrides}>
       {apiError && <Toast kind={TOAST_KIND.negative}>{apiError}</Toast>}
-      <Form
-        onSubmit={(values: Credentials) => dispatch(login(values))}
-        render={p => (
-          <form onSubmit={p.handleSubmit}>
-            <Field
-              name="username"
-              validate={required}
-              render={({ input, meta: { error, touched } }) => (
-                <FormControl error={error && touched && "Required"}>
-                  <Input
-                    size={SIZE.large}
-                    placeholder="Username"
-                    error={error && touched}
-                    {...input}
-                  />
-                </FormControl>
-              )}
-            />
-            <Field
-              name="password"
-              type="password"
-              validate={required}
-              render={({ input, meta: { error, touched } }) => (
-                <FormControl error={error && touched && "Required"}>
-                  <Input
-                    size={SIZE.large}
-                    placeholder="Password"
-                    error={error && touched}
-                    {...input}
-                  />
-                </FormControl>
-              )}
-            />
-            <Button
-              type="submit"
-              isLoading={isAuthenticating}
-              disabled={isAuthenticating}
-              kind={KIND.primary}
-              endEnhancer={<span>→</span>}
-            >
-              Log in
-            </Button>
-          </form>
-        )}
-      />
+
+      <form onSubmit={handleSubmit(submit)}>
+        <FormControl error={errors.username && "Required"}>
+          <Input
+            name="username"
+            size={SIZE.large}
+            placeholder="Username"
+            error={!!errors.username}
+            inputRef={register({ required: true })}
+          />
+        </FormControl>
+
+        <FormControl error={errors.password && "Required"}>
+          <Input
+            name="password"
+            type="password"
+            size={SIZE.large}
+            placeholder="Password"
+            error={!!errors.password}
+            inputRef={register({ required: true })}
+          />
+        </FormControl>
+
+        <Button
+          type="submit"
+          isLoading={isAuthenticating}
+          disabled={isAuthenticating}
+          kind={KIND.primary}
+          endEnhancer={<span>→</span>}
+        >
+          Log in
+        </Button>
+      </form>
     </Card>
   )
 }
