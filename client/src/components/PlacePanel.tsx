@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { styled } from "baseui"
 import { Theme } from "baseui/theme"
 import { H4, H6 } from "baseui/typography"
@@ -10,6 +10,7 @@ import { Textarea } from "baseui/textarea"
 import { Button } from "baseui/button"
 
 import { Place } from "../types"
+import { api } from "../utils"
 
 type PanelTheme = Theme & { $isOpen: boolean }
 type ContainerTheme = Theme & { $row: boolean }
@@ -109,6 +110,15 @@ type Props = {
 export default function PlacePanel(props: Props): JSX.Element {
   const { selectedPlace } = props
   const [review, setReview] = useState("")
+
+  useEffect(() => {
+    if (selectedPlace) {
+      api
+        .get("/reviews", { "review[place_id]": 77 })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
+    }
+  }, [selectedPlace])
 
   return (
     <Panel $isOpen={!!selectedPlace}>
