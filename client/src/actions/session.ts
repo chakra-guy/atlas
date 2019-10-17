@@ -36,7 +36,7 @@ export const loginEpic = (action$: Action$) => {
         switchMap(({ data, meta }: any) => {
           const payload = { user: data, token: meta.token }
 
-          localStorage.setItem("token", JSON.stringify(payload))
+          localStorage.setItem("atlas-auth", JSON.stringify(payload))
 
           return of(loginSuccess(payload))
         }),

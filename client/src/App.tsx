@@ -15,8 +15,8 @@ const Container = styled("div", {
 export default function App(): JSX.Element {
   useEffect(() => {
     try {
-      const token = JSON.parse(localStorage.getItem("token") || "")
-      if (token) dispatch(loginSuccess(token))
+      const auth = JSON.parse(localStorage.getItem("atlas-auth") || "")
+      if (auth) dispatch(loginSuccess(auth))
     } catch (error) {
       // ignore
     }

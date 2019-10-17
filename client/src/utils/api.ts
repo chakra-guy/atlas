@@ -1,9 +1,9 @@
 const API = process.env.REACT_APP_API_URL
 
 function headers() {
-  let token: string | null = null
+  let auth = { token: null }
   try {
-    token = JSON.parse(localStorage.getItem("token") || "")
+    auth = JSON.parse(localStorage.getItem("atlas-auth") || "")
   } catch (error) {
     // ignore
   }
@@ -11,7 +11,7 @@ function headers() {
   return {
     Accept: "application/json",
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer: ${auth.token}`,
   }
 }
 
