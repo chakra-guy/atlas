@@ -12,7 +12,7 @@ defmodule Atlas.Places.Place do
     field :rating, :float
     field :website, :string
 
-    # has_many :review, Review
+    has_many :review, Review
 
     timestamps()
   end

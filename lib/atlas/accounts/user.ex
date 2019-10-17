@@ -9,7 +9,7 @@ defmodule Atlas.Accounts.User do
     field :password_hash, :string
     field :password, :string, virtual: true
 
-    # has_many :review, Review
+    has_many :review, Review
 
     timestamps()
   end

@@ -23,7 +23,6 @@ defmodule AtlasWeb.Router do
   scope "/api", AtlasWeb do
     pipe_through [:api, :api_auth]
 
-    # resources "/places", PlaceController, except: [:new, :edit]
     resources "/reviews", ReviewController
   end
 end

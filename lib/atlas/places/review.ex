@@ -6,10 +6,10 @@ defmodule Atlas.Places.Review do
   alias Atlas.Places.Place
 
   schema "reviews" do
-    field :image_url, :string
+    # field :image_url, :string TODO add image attachment to reviews
     field :rating, :integer
     field :text, :string
-    
+
     belongs_to :user, User
     belongs_to :place, Place
 
@@ -19,7 +19,7 @@ defmodule Atlas.Places.Review do
   @doc false
   def changeset(review, attrs) do
     review
-    |> cast(attrs, [:rating, :text, :image_url, :user_id, :place_id])
+    |> cast(attrs, [:rating, :text, :user_id, :place_id])
     |> validate_required([:rating, :text])
   end
 end
