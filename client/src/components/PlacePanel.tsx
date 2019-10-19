@@ -13,7 +13,6 @@ import { Place } from "../types"
 import { api } from "../utils"
 
 type PanelTheme = Theme & { $isOpen: boolean }
-type ContainerTheme = Theme & { $row: boolean }
 
 const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
   bottom: p.$isOpen ? "0" : "-120px",
@@ -58,6 +57,8 @@ const PanelInside = styled("div", p => ({
   height: "100%",
   padding: p.$theme.sizing.scale800,
 }))
+
+type ContainerTheme = Theme & { $row: boolean }
 
 const Container = styled<{ $row?: boolean }, "div", ContainerTheme>("div", p => ({
   display: "flex",

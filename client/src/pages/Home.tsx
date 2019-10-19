@@ -5,7 +5,7 @@ import { useObservable } from "rxjs-hooks"
 
 import store$ from "../store$"
 import { dispatch } from "../action$"
-import { setDistance, setGeo } from "../actions/map"
+import { setDistance } from "../actions/map"
 import { Map, PlacePanel } from "../components"
 import { Place } from "../types"
 
@@ -53,11 +53,7 @@ export default function Mainpage() {
         />
       </DistanceContainer>
       <MapContainer>
-        <Map
-          places={places}
-          setSelectedPlace={setSelectedPlace}
-          setCoordinatinates={(lat: number, lon: number) => dispatch(setGeo({ lat, lon }))}
-        />
+        <Map places={places} setSelectedPlace={setSelectedPlace} />
       </MapContainer>
     </>
   )

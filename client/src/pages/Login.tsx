@@ -43,10 +43,7 @@ const initialValues = {
 }
 
 export default function Login() {
-  const { isAuthenticated, isAuthenticating, error: apiError } = useObservable(
-    () => view$,
-    initialValues,
-  )
+  const { isAuthenticated, isAuthenticating, error } = useObservable(() => view$, initialValues)
 
   const { register, handleSubmit, errors } = useForm<Credentials>()
 
@@ -56,7 +53,7 @@ export default function Login() {
     <Redirect to="/" />
   ) : (
     <Card title="Login" overrides={cardOverrides}>
-      {apiError && <Toast kind={TOAST_KIND.negative}>{apiError}</Toast>}
+      {error && <Toast kind={TOAST_KIND.negative}>{error}</Toast>}
 
       <form onSubmit={handleSubmit(submit)}>
         <FormControl error={errors.username && "Required"}>

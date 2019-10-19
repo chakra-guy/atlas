@@ -26,7 +26,7 @@ type Params = {
   distance: number
 }
 
-export const fetchNearByPlacesEpic = (action$: Action$, store$: Store$) => {
+export const fetchNearByPlacesEpic = (_action$: Action$, store$: Store$) => {
   return store$.pipe(
     map((state: RootState) => ({
       lat: state.map.geo.lat,

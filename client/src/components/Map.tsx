@@ -9,8 +9,11 @@ import { styled } from "baseui"
 
 import "./map.css"
 
-import { useDebouncedCallback } from "../hooks"
 import { Place } from "../types"
+import { useEventCallback } from "rxjs-hooks"
+import { debounceTime, tap, ignoreElements } from "rxjs/operators"
+import { dispatch } from "../action$"
+import { setGeo } from "../actions/map"
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 
@@ -29,21 +32,26 @@ const MarkerIcon = styled("svg", p => ({
 type Props = {
   places: Place[]
   setSelectedPlace: (place: Place | null) => void
-  setCoordinatinates: (lat: number, lon: number) => void
 }
 
-export default function Map({ places, setSelectedPlace, setCoordinatinates }: Props): JSX.Element {
+export default function Map({ places, setSelectedPlace }: Props): JSX.Element {
   const [viewport, setViewport] = useState<ViewState>({
     latitude: 47.4979,
     longitude: 19.05465,
     zoom: 16,
   })
 
-  const updateCoordinatinates = useDebouncedCallback(setCoordinatinates, 250)
+  const [setCoordinatinates] = useEventCallback(geo$ =>
+    geo$.pipe(
+      debounceTime(250),
+      tap(geo => dispatch(setGeo(geo))),
+      ignoreElements(),
+    ),
+  )
 
   const handleViewportChange: ViewportChangeHandler = viewState => {
     setViewport(viewState)
-    updateCoordinatinates(viewState.latitude, viewState.longitude)
+    setCoordinatinates({ lat: viewState.latitude, lon: viewState.longitude })
   }
 
   return (
