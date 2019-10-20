@@ -8,6 +8,8 @@
 - [ ] Add the ability to read reviews
 - [ ] Add the ability to add number reviews
 - [ ] Add the ability to add text reviews
+- [ ] Fix scrolling
+- [x] Make map performant
 
 ### Code Quality
 
@@ -17,15 +19,17 @@
 - [ ] Add tests
 - [ ] Add proper types
 - [ ] Organise styles
-- [ ] Switch out mapbox-gl lib
+- [x] Switch out mapbox-gl lib
 
 ## Non-priority
 
 ### Features
 
-- [ ] Add transition to map markers to make it look like it loads faster
-- [ ] Add loading indicator for places endpoint
+- [x] Add transition to map markers to make it look like it loads faster
+- [ ] Add loading indicator for the map
 - [ ] Calc distance from MapGL zoom level
+- [ ] Add `search for Place or location` functionality to map
+- [ ] Style marker on map
 
 ### Code Quality
 
@@ -34,6 +38,7 @@
 
 # API
 
+- [ ] formalize to `lng/lat`
 - [ ] remove @default_place from PlaceController
 - [ ] better index/2 route for PlaceController
 - [ ] better type conversion for Places.list_places/1
