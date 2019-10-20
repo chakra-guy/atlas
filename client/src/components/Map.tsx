@@ -14,13 +14,13 @@ type Props = {
   setSelectedPlace: (place: Place | null) => void
 }
 
-type mapPropsType = {
+type mapboxType = {
   center: [number, number]
   zoom: [number]
 }
 
 export default function Map({ places, setSelectedPlace }: Props): JSX.Element {
-  const [mapProps] = useState<mapPropsType>({
+  const [mapbox] = useState<mapboxType>({
     zoom: [16],
     center: [19.05465, 47.4979],
   })
@@ -37,17 +37,19 @@ export default function Map({ places, setSelectedPlace }: Props): JSX.Element {
     map.getCanvas().style.cursor = cursor
   }
 
+  const handleDrag = (map: any) => {
+    const { lng, lat } = map.getCenter()
+    setCoordinatinates({ lat: lat, lon: lng })
+  }
+
   return (
     <Mapbox
-      zoom={mapProps.zoom}
-      center={mapProps.center}
+      zoom={mapbox.zoom}
+      center={mapbox.center}
       style="mapbox://styles/mapbox/streets-v9"
-      containerStyle={{ height: "100vh", width: "100vw" }}
+      containerStyle={{ height: "100%", width: "100%" }}
       onClick={() => setSelectedPlace(null)}
-      onDrag={map => {
-        const { lng, lat } = map.getCenter()
-        setCoordinatinates({ lat: lat, lon: lng })
-      }}
+      onDrag={handleDrag}
     >
       <Layer type="symbol" id="marker" layout={{ "icon-image": "circle-15" }}>
         {places.map(place => (

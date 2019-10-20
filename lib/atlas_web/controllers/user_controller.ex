@@ -14,7 +14,7 @@ defmodule AtlasWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def create(conn, %{"user" => user_params}) do
+  def create(conn, %{"username" => _, "password" => _} = user_params) do
     case Accounts.signup_user(user_params) do
       {:ok, %User{} = user} ->
         {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
@@ -22,7 +22,7 @@ defmodule AtlasWeb.UserController do
         conn
         |> put_status(:created)
         |> put_view(SessionView)
-        |> render( "show.json", %{jwt: jwt, user: user})
+        |> render("show.json", %{jwt: jwt, user: user})
 
       {:error, _reason} ->
         conn
@@ -37,8 +37,9 @@ defmodule AtlasWeb.UserController do
     render(conn, "show.json", user: user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
+  def update(conn, %{"id" => id, "username" => username, "password" => password}) do
     user = Accounts.get_user!(id)
+    user_params = %{"username" => username, "password" => password}
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
       render(conn, "show.json", user: user)

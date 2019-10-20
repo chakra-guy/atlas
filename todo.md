@@ -4,11 +4,11 @@
 
 ### Features
 
-- [ ] Finish signup page
+- [x] Finish signup page
 - [ ] Add the ability to read reviews
 - [ ] Add the ability to add number reviews
 - [ ] Add the ability to add text reviews
-- [ ] Fix scrolling
+- [x] Fix scrolling
 - [x] Make map performant
 
 ### Code Quality
@@ -33,11 +33,16 @@
 
 ### Code Quality
 
+- [ ] Add constant for action types
 - [x] Figure out what to do with "explicit-function-return-type" rule
 - [ ] Check my typescript config
+- [ ] Add proper error handling/error messages
+- [ ] Go through fixmes/todos and add them here
 
 # API
 
+- [ ] Go through fixmes/todos and add them here
+- [ ] Add proper error handling/error messages
 - [ ] formalize to `lng/lat`
 - [ ] remove @default_place from PlaceController
 - [ ] better index/2 route for PlaceController

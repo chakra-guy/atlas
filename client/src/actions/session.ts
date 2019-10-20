@@ -5,6 +5,51 @@ import { ofType } from "../utils/operators$"
 import { api } from "../utils"
 import { Action, Credentials, User, Action$ } from "../types"
 
+export const signup = (payload: Credentials) => ({
+  type: "SIGN_UP",
+  payload,
+})
+
+export const signupStart = () => ({
+  type: "SIGN_UP_START",
+})
+
+export const signupSuccess = (payload: { user: User; token: string }) => ({
+  type: "SIGN_UP_SUCCESS",
+  payload,
+})
+
+export const signupFailed = (payload: string) => ({
+  type: "SIGN_UP_FAILED",
+  payload,
+})
+
+export const signupEpic = (action$: Action$) => {
+  return action$.pipe(
+    ofType<Action<Credentials>>("SIGN_UP"),
+    map(({ payload }: any) => ({
+      username: payload.username,
+      password: payload.password,
+    })),
+    switchMap((params: Credentials) =>
+      from(api.post("/signup", params)).pipe(
+        switchMap(({ data, meta }: any) => {
+          console.log("data", data)
+          console.log("meta", meta)
+
+          const payload = { user: data, token: meta.token }
+
+          localStorage.setItem("atlas-auth", JSON.stringify(payload))
+
+          return of(signupSuccess(payload))
+        }),
+        catchError(error => of(signupFailed(error))),
+        startWith(signupStart()),
+      ),
+    ),
+  )
+}
+
 export const login = (payload: Credentials) => ({
   type: "LOG_IN",
   payload,

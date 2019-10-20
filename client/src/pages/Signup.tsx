@@ -1,37 +1,83 @@
 import React, { useState, FormEvent } from "react"
+import { pluck, distinctUntilChanged } from "rxjs/operators"
+import { useObservable } from "rxjs-hooks"
+import useForm from "react-hook-form"
+import { Redirect } from "react-router"
 import { FormControl } from "baseui/form-control"
 import { Card } from "baseui/card"
 import { Input } from "baseui/input"
-import { Button, KIND } from "baseui/button"
+import { Button, KIND, SIZE } from "baseui/button"
+
+import store$ from "../store$"
+import { dispatch } from "../action$"
+import { Credentials } from "../types"
+import { signup } from "../actions/session"
+
+const cardOverrides = {
+  Root: {
+    style: (p: any) => ({
+      boxShadow: p.$theme.lighting.overlay0,
+      borderWidth: 0,
+
+      "@media screen and (min-width: 600px)": {
+        paddingTop: p.$theme.sizing.scale900,
+        width: "480px",
+        margin: "auto",
+      },
+    }),
+  },
+}
+
+const view$ = store$.pipe(
+  pluck("session"),
+  distinctUntilChanged(),
+)
+
+const initialValues = {
+  isAuthenticated: false,
+  isAuthenticating: false,
+}
 
 export default function Signup(): JSX.Element {
-  const [loginValue, setLoginValue] = useState("")
-  const [passwordValue, setPasswordValue] = useState("")
+  const { isAuthenticated, isAuthenticating } = useObservable(() => view$, initialValues)
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    console.log("submitted")
-  }
+  const { register, handleSubmit, errors } = useForm<Credentials>()
 
-  return (
-    <Card title="Signup">
-      <form onSubmit={handleSubmit}>
-        <FormControl label="username">
+  const submit = (values: Credentials) => dispatch(signup(values))
+
+  return isAuthenticated ? (
+    <Redirect to="/" />
+  ) : (
+    <Card title="Signup" overrides={cardOverrides}>
+      <form onSubmit={handleSubmit(submit)}>
+        <FormControl error={errors.username && "Required"}>
           <Input
-            id="login-input"
-            value={loginValue}
-            onChange={e => setLoginValue(e.currentTarget.value)}
+            name="username"
+            size={SIZE.large}
+            placeholder="Username"
+            error={!!errors.username}
+            inputRef={register({ required: true })}
           />
         </FormControl>
-        <FormControl label="password">
+
+        <FormControl error={errors.password && "Required"}>
           <Input
-            id="password-input"
+            name="password"
             type="password"
-            value={passwordValue}
-            onChange={e => setPasswordValue(e.currentTarget.value)}
+            size={SIZE.large}
+            placeholder="Password"
+            error={!!errors.password}
+            inputRef={register({ required: true })}
           />
         </FormControl>
-        <Button type="submit" kind={KIND.primary}>
+
+        <Button
+          type="submit"
+          isLoading={isAuthenticating}
+          disabled={isAuthenticating}
+          kind={KIND.primary}
+          endEnhancer={<span>→</span>}
+        >
           Sign up
         </Button>
       </form>
