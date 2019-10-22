@@ -2,8 +2,9 @@ import { from, of } from "rxjs"
 import { switchMap, catchError, map, distinctUntilChanged } from "rxjs/operators"
 
 import { api } from "../utils"
-import { Geo, Place, Action$ } from "../types"
+import { Geo, Action$ } from "../types"
 import { RootState, Store$ } from "../store$"
+import { setPlaces } from "./place"
 
 export const setGeo = (payload: Geo) => ({
   type: "SET_GEO",
@@ -15,18 +16,13 @@ export const setDistance = (payload: number) => ({
   payload,
 })
 
-export const setPlaces = (payload: Place[]) => ({
-  type: "SET_PLACES",
-  payload,
-})
-
 type Params = {
   lat: number
   lon: number
   distance: number
 }
 
-export const fetchNearByPlacesEpic = (_action$: Action$, store$: Store$) => {
+export const fetchNearbyPlacesEpic = (_action$: Action$, store$: Store$) => {
   return store$.pipe(
     map((state: RootState) => ({
       lat: state.map.geo.lat,

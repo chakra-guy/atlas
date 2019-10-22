@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { styled } from "baseui"
 import { Theme } from "baseui/theme"
 import { H4, H6 } from "baseui/typography"
@@ -10,7 +10,8 @@ import { Textarea } from "baseui/textarea"
 import { Button } from "baseui/button"
 
 import { Place } from "../types"
-import { api } from "../utils"
+import { dispatch } from "../action$"
+import { fetchReviews } from "../actions/place"
 
 type PanelTheme = Theme & { $isOpen: boolean }
 
@@ -104,38 +105,39 @@ const ReviewsTitleOverrides = {
 }
 
 type Props = {
-  selectedPlace: Place | null
-  setSelectedPlace: (place: Place | null) => void
+  places: Place[]
+  placeID: number | null
 }
 
 export default function PlacePanel(props: Props): JSX.Element {
-  const { selectedPlace } = props
+  const { places, placeID } = props
+
   const [review, setReview] = useState("")
 
+  const place = useMemo(() => places.find(p => p.id === placeID), [places, placeID])
+
   useEffect(() => {
-    if (selectedPlace) {
-      api
-        .get("/reviews", { "review[place_id]": 77 })
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
+    if (placeID) {
+      console.log("placeID", placeID)
+      dispatch(fetchReviews(placeID))
     }
-  }, [selectedPlace])
+  }, [placeID])
 
   return (
-    <Panel $isOpen={!!selectedPlace}>
+    <Panel $isOpen={!!place}>
       {/* FIXME dont do this, fix animation in a different way */}
-      {selectedPlace && (
+      {place && (
         <PanelInside>
           <Container $row>
             <AspectRatioBox width="scale2400">
-              <AspectRatioBoxBody as="img" src={selectedPlace.logo} overrides={LogoOverrides} />
+              <AspectRatioBoxBody as="img" src={place.logo} overrides={LogoOverrides} />
             </AspectRatioBox>
             <HeaderContent>
-              <H4 overrides={PlaceNameOverrides}>{selectedPlace.name}</H4>
-              <StyledLink href={selectedPlace.website} target="_blank">
-                {selectedPlace.website}
+              <H4 overrides={PlaceNameOverrides}>{place.name}</H4>
+              <StyledLink href={place.website} target="_blank">
+                {place.website}
               </StyledLink>
-              <StarRating value={selectedPlace.rating} />
+              <StarRating value={place.rating} />
             </HeaderContent>
           </Container>
           <Container>
@@ -154,15 +156,9 @@ export default function PlacePanel(props: Props): JSX.Element {
                 Submit Review
               </Button>
             )}
-            <ul>
-              <li>comment 1</li>
-              <li>comment 2</li>
-              <li>comment 3</li>
-              <li>comment 4</li>
-              <li>comment 5</li>
-            </ul>
+            <ul>{place.reviews && place.reviews.map(({ text }) => <li>{text}</li>)}</ul>
           </Container>
-          {<pre style={{ overflow: "hidden" }}>{JSON.stringify(selectedPlace, undefined, 2)}</pre>}
+          {<pre style={{ overflow: "hidden" }}>{JSON.stringify(place, undefined, 2)}</pre>}
         </PanelInside>
       )}
     </Panel>

@@ -5,14 +5,18 @@
 ### Features
 
 - [x] Finish signup page
-- [ ] Add the ability to read reviews
-- [ ] Add the ability to add number reviews
-- [ ] Add the ability to add text reviews
+- [x] Add the ability to read reviews
+- [ ] Add the ability to add number reviews when authenticated
+- [ ] Add the ability to add text reviews when authenticated
 - [x] Fix scrolling
 - [x] Make map performant
+- [ ] Add loading indicator
+- [ ] Move this to `<Review />` component
+- [ ] Add avatars to reviews
 
 ### Code Quality
 
+- [ ] !!! normalize store
 - [ ] Fix `.env` keys
 - [ ] Rewrite session/auth with proper logout and refresh
 - [ ] Fix warning is console
@@ -20,6 +24,7 @@
 - [ ] Add proper types
 - [ ] Organise styles
 - [x] Switch out mapbox-gl lib
+- [ ] Use more generic default values (example: geo)
 
 ## Non-priority
 
@@ -30,6 +35,7 @@
 - [ ] Calc distance from MapGL zoom level
 - [ ] Add `search for Place or location` functionality to map
 - [ ] Style marker on map
+- [ ] Add avatars
 
 ### Code Quality
 
@@ -56,3 +62,22 @@
 - [ ] add `has_many :review, Review` ?
 - [ ] compose list_reviews_by_user/place queries
 - [ ] add signup/login/logout/refresh for session
+
+# For youtube
+
+## Client
+
+- testing
+- typescript
+- RxJs Store
+- WebUI
+- Mapbox
+- Auth/react-hook-form
+
+## API
+
+- testing
+- auth
+- docker
+- postGIS
+- mocking DB

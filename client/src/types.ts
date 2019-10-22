@@ -10,6 +10,15 @@ export type Credentials = {
   password: string
 }
 
+export type Review = {
+  id: number
+  image_url?: string
+  place_id: number
+  user_id: number
+  rating: number
+  text: string
+}
+
 export type Place = {
   id: number
   name: string
@@ -18,6 +27,7 @@ export type Place = {
   logo: string
   rating: number
   website: string
+  reviews: Review[]
 }
 
 export type Geo = {
@@ -28,6 +38,9 @@ export type Geo = {
 export type mapState = {
   geo: Geo
   distance: number
+}
+
+export type placeState = {
   places: Place[]
 }
 

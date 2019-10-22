@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { pluck, distinctUntilChanged } from "rxjs/operators"
+import { map, distinctUntilChanged, pluck, combineLatest } from "rxjs/operators"
 import { styled } from "baseui"
 import { useObservable } from "rxjs-hooks"
 
@@ -28,8 +28,15 @@ const MapContainer = styled("div", p => ({
 }))
 
 const view$ = store$.pipe(
-  pluck("map"),
+  pluck("map", "distance"),
   distinctUntilChanged(),
+  combineLatest(
+    store$.pipe(
+      pluck("places", "places"),
+      distinctUntilChanged(),
+    ),
+  ),
+  map(([distance, places]: [number, Place[]]) => ({ distance, places })),
 )
 
 const initialValues = {
@@ -37,13 +44,13 @@ const initialValues = {
   places: [],
 }
 
-export default function Mainpage() {
+export default function Home() {
   const { distance, places } = useObservable(() => view$, initialValues)
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
+  const [selectedPlaceID, setSelectedPlaceID] = useState<number | null>(null)
 
   return (
     <>
-      <PlacePanel selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
+      <PlacePanel places={places} placeID={selectedPlaceID} />
       <DistanceContainer>
         distance
         <input
@@ -53,7 +60,7 @@ export default function Mainpage() {
         />
       </DistanceContainer>
       <MapContainer>
-        <Map places={places} setSelectedPlace={setSelectedPlace} />
+        <Map places={places} setSelectedPlaceID={setSelectedPlaceID} />
       </MapContainer>
     </>
   )

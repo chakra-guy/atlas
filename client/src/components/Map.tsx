@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl"
+import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 
 import { Place } from "../types"
 import { useEventCallback } from "rxjs-hooks"
@@ -11,7 +11,7 @@ const Mapbox = ReactMapboxGl({ accessToken: process.env.REACT_APP_MAPBOX_ACCESS_
 
 type Props = {
   places: Place[]
-  setSelectedPlace: (place: Place | null) => void
+  setSelectedPlaceID: (place_id: number | null) => void
 }
 
 type mapboxType = {
@@ -19,7 +19,7 @@ type mapboxType = {
   zoom: [number]
 }
 
-export default function Map({ places, setSelectedPlace }: Props): JSX.Element {
+export default function Map({ places, setSelectedPlaceID }: Props): JSX.Element {
   const [mapbox] = useState<mapboxType>({
     zoom: [16],
     center: [19.05465, 47.4979],
@@ -48,7 +48,7 @@ export default function Map({ places, setSelectedPlace }: Props): JSX.Element {
       center={mapbox.center}
       style="mapbox://styles/mapbox/streets-v9"
       containerStyle={{ height: "100%", width: "100%" }}
-      onClick={() => setSelectedPlace(null)}
+      onClick={() => setSelectedPlaceID(null)}
       onDrag={handleDrag}
     >
       <Layer type="symbol" id="marker" layout={{ "icon-image": "circle-15" }}>
@@ -56,7 +56,7 @@ export default function Map({ places, setSelectedPlace }: Props): JSX.Element {
           <Feature
             key={place.id}
             coordinates={[place.lon, place.lat]}
-            onClick={() => setSelectedPlace(place)}
+            onClick={() => setSelectedPlaceID(place.id)}
             onMouseEnter={handleHover("pointer")}
             onMouseLeave={handleHover("")}
           />

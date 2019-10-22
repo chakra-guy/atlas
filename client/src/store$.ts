@@ -6,10 +6,12 @@ import { combineReducers, createState } from "./utils/storeHelpers"
 
 import { mapReducer } from "./reducers/map"
 import { sessionReducer } from "./reducers/session"
+import { placesReducer } from "./reducers/places"
 
 const rootReducer = combineReducers({
   map: mapReducer,
   session: sessionReducer,
+  places: placesReducer,
 })
 
 const store$ = createState((stream$: Action$) =>

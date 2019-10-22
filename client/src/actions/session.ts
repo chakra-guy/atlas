@@ -1,6 +1,6 @@
 import { of, from } from "rxjs"
 
-import { map, switchMap, catchError, startWith } from "rxjs/operators"
+import { switchMap, catchError, startWith, pluck } from "rxjs/operators"
 import { ofType } from "../utils/operators$"
 import { api } from "../utils"
 import { Action, Credentials, User, Action$ } from "../types"
@@ -26,17 +26,11 @@ export const signupFailed = (payload: string) => ({
 
 export const signupEpic = (action$: Action$) => {
   return action$.pipe(
-    ofType<Action<Credentials>>("SIGN_UP"),
-    map(({ payload }: any) => ({
-      username: payload.username,
-      password: payload.password,
-    })),
+    ofType<Action<any>>("SIGN_UP"),
+    pluck("payload"),
     switchMap((params: Credentials) =>
       from(api.post("/signup", params)).pipe(
         switchMap(({ data, meta }: any) => {
-          console.log("data", data)
-          console.log("meta", meta)
-
           const payload = { user: data, token: meta.token }
 
           localStorage.setItem("atlas-auth", JSON.stringify(payload))
@@ -71,11 +65,8 @@ export const loginFailed = (payload: string) => ({
 
 export const loginEpic = (action$: Action$) => {
   return action$.pipe(
-    ofType<Action<Credentials>>("LOG_IN"),
-    map(({ payload }: any) => ({
-      username: payload.username,
-      password: payload.password,
-    })),
+    ofType<Action<any>>("LOG_IN"),
+    pluck("payload"),
     switchMap((params: Credentials) =>
       from(api.post("/login", params)).pipe(
         switchMap(({ data, meta }: any) => {
