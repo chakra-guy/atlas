@@ -12,6 +12,7 @@ import { Button } from "baseui/button"
 import { Place } from "../types"
 import { dispatch } from "../action$"
 import { fetchReviews } from "../actions/place"
+import Review from "./Review"
 
 type PanelTheme = Theme & { $isOpen: boolean }
 
@@ -55,7 +56,7 @@ const Panel = styled<{ $isOpen: boolean }, "div", PanelTheme>("div", p => ({
 
 const PanelInside = styled("div", p => ({
   overflow: "auto",
-  height: "100%",
+  height: `calc(100% - ${p.$theme.sizing.scale1200})`,
   padding: p.$theme.sizing.scale800,
 }))
 
@@ -117,10 +118,7 @@ export default function PlacePanel(props: Props): JSX.Element {
   const place = useMemo(() => places.find(p => p.id === placeID), [places, placeID])
 
   useEffect(() => {
-    if (placeID) {
-      console.log("placeID", placeID)
-      dispatch(fetchReviews(placeID))
-    }
+    if (placeID) dispatch(fetchReviews(placeID))
   }, [placeID])
 
   return (
@@ -156,7 +154,7 @@ export default function PlacePanel(props: Props): JSX.Element {
                 Submit Review
               </Button>
             )}
-            <ul>{place.reviews && place.reviews.map(({ text }) => <li>{text}</li>)}</ul>
+            {place.reviews && place.reviews.map(Review)}
           </Container>
           {<pre style={{ overflow: "hidden" }}>{JSON.stringify(place, undefined, 2)}</pre>}
         </PanelInside>

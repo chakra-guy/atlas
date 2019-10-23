@@ -10,13 +10,13 @@ export type Credentials = {
   password: string
 }
 
-export type Review = {
+export type ReviewType = {
   id: number
   image_url?: string
-  place_id: number
-  user_id: number
   rating: number
   text: string
+  place_id: number
+  user: User
 }
 
 export type Place = {
@@ -27,7 +27,7 @@ export type Place = {
   logo: string
   rating: number
   website: string
-  reviews: Review[]
+  reviews: ReviewType[]
 }
 
 export type Geo = {

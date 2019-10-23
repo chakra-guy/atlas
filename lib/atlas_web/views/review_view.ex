@@ -1,6 +1,6 @@
 defmodule AtlasWeb.ReviewView do
   use AtlasWeb, :view
-  alias AtlasWeb.ReviewView
+  alias AtlasWeb.{ReviewView, UserView}
 
   def render("index.json", %{reviews: reviews}) do
     %{data: render_many(reviews, ReviewView, "review.json")}
@@ -16,8 +16,8 @@ defmodule AtlasWeb.ReviewView do
       image_url: review.image_url,
       rating: review.rating,
       text: review.text,
-      user_id: review.user_id,
-      place_id: review.place_id
+      place_id: review.place_id,
+      user: render_one(review.user, UserView, "user.json")
     }
   end
 end

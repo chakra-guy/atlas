@@ -13,6 +13,7 @@
 - [ ] Add loading indicator
 - [ ] Move this to `<Review />` component
 - [ ] Add avatars to reviews
+- [ ] Logout
 
 ### Code Quality
 

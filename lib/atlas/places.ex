@@ -73,7 +73,9 @@ defmodule Atlas.Places do
         where: u.id == ^user_id and p.id == ^place_id,
         select: r
 
-    Repo.all(query)
+    query
+    |> Repo.all()
+    |> Repo.preload([:user])
   end
 
   def list_reviews_by_place(place_id) do
