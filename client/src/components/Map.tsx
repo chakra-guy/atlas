@@ -39,7 +39,7 @@ export default function Map({ places, setSelectedPlaceID }: Props): JSX.Element 
 
   const handleDrag = (map: any) => {
     const { lng, lat } = map.getCenter()
-    setCoordinatinates({ lat: lat, lon: lng })
+    setCoordinatinates({ lng, lat })
   }
 
   return (
@@ -55,7 +55,7 @@ export default function Map({ places, setSelectedPlaceID }: Props): JSX.Element 
         {places.map(place => (
           <Feature
             key={place.id}
-            coordinates={[place.lon, place.lat]}
+            coordinates={[place.lng, place.lat]}
             onClick={() => setSelectedPlaceID(place.id)}
             onMouseEnter={handleHover("pointer")}
             onMouseLeave={handleHover("")}

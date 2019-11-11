@@ -23,7 +23,7 @@ export type Place = {
   id: number
   name: string
   lat: number
-  lon: number
+  lng: number
   logo: string
   rating: number
   website: string
@@ -32,7 +32,7 @@ export type Place = {
 
 export type Geo = {
   lat: number
-  lon: number
+  lng: number
 }
 
 export type mapState = {

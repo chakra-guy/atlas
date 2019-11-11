@@ -7,7 +7,7 @@ defmodule AtlasWeb.PlaceControllerTest do
   @create_attrs %{
     lat: 120.5,
     logo: "some logo",
-    lon: 120.5,
+    lng: 120.5,
     name: "some name",
     rating: 120.5,
     website: "some website"
@@ -15,12 +15,12 @@ defmodule AtlasWeb.PlaceControllerTest do
   @update_attrs %{
     lat: 456.7,
     logo: "some updated logo",
-    lon: 456.7,
+    lng: 456.7,
     name: "some updated name",
     rating: 456.7,
     website: "some updated website"
   }
-  @invalid_attrs %{lat: nil, logo: nil, lon: nil, name: nil, rating: nil, website: nil}
+  @invalid_attrs %{lat: nil, logo: nil, lng: nil, name: nil, rating: nil, website: nil}
 
   def fixture(:place) do
     {:ok, place} = Places.create_place(@create_attrs)
@@ -49,7 +49,7 @@ defmodule AtlasWeb.PlaceControllerTest do
                "id" => id,
                "lat" => 120.5,
                "logo" => "some logo",
-               "lon" => 120.5,
+               "lng" => 120.5,
                "name" => "some name",
                "rating" => 120.5,
                "website" => "some website"
@@ -75,7 +75,7 @@ defmodule AtlasWeb.PlaceControllerTest do
                "id" => id,
                "lat" => 456.7,
                "logo" => "some updated logo",
-               "lon" => 456.7,
+               "lng" => 456.7,
                "name" => "some updated name",
                "rating" => 456.7,
                "website" => "some updated website"

@@ -1,9 +1,9 @@
 import { from, of } from "rxjs"
-import { switchMap, catchError, map, distinctUntilChanged } from "rxjs/operators"
+import { switchMap, catchError, map, distinctUntilChanged, pluck } from "rxjs/operators"
 
 import { api } from "../utils"
-import { Geo, Action$ } from "../types"
-import { RootState, Store$ } from "../store$"
+import { Geo, Action$, mapState } from "../types"
+import { Store$ } from "../store$"
 import { setPlaces } from "./place"
 
 export const setGeo = (payload: Geo) => ({
@@ -18,19 +18,21 @@ export const setDistance = (payload: number) => ({
 
 type Params = {
   lat: number
-  lon: number
+  lng: number
   distance: number
 }
 
 export const fetchNearbyPlacesEpic = (_action$: Action$, store$: Store$) => {
   return store$.pipe(
-    map((state: RootState) => ({
-      lat: state.map.geo.lat,
-      lon: state.map.geo.lon,
-      distance: state.map.distance,
+    pluck("map"),
+    distinctUntilChanged(),
+    map((map: mapState) => ({
+      lat: map.geo.lat,
+      lng: map.geo.lng,
+      distance: map.distance,
     })),
     distinctUntilChanged((prev: Params, curr: Params) => {
-      return prev.lat === curr.lat && prev.lon === curr.lon && prev.distance === curr.distance
+      return prev.lat === curr.lat && prev.lng === curr.lng && prev.distance === curr.distance
     }),
     switchMap((params: Params) =>
       from(api.get("/places", params)).pipe(

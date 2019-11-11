@@ -12,7 +12,7 @@
 
 alias Atlas.Places
 
-headers = [:name, :rating, :logo, :website, :lat, :lon]
+headers = [:name, :rating, :logo, :website, :lat, :lng]
 
 "./fixtures/places_table.csv"
 |> Path.expand(__DIR__)

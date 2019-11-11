@@ -1,7 +1,7 @@
 import { Action, mapState } from "../types"
 
 const initialState = {
-  geo: { lat: 47.497903, lon: 19.054647 },
+  geo: { lng: 19.054647, lat: 47.497903 },
   distance: 750,
 }
 

@@ -17,6 +17,6 @@ defmodule AtlasWeb.PlaceView do
       logo: place.logo,
       website: place.website,
       lat: place.lat,
-      lon: place.lon}
+      lng: place.lng}
   end
 end

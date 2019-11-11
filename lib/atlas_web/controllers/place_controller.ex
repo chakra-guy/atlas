@@ -7,7 +7,7 @@ defmodule AtlasWeb.PlaceController do
   action_fallback AtlasWeb.FallbackController
 
   # FIXME check all error cases
-  def index(conn, %{"lat" => _, "lon" => _, "distance" => _} = place_params) do
+  def index(conn, %{"lat" => _, "lng" => _, "distance" => _} = place_params) do
     places = Places.list_places(place_params)
     render(conn, "index.json", places: places)
   end
