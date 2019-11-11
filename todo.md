@@ -8,35 +8,36 @@
 - [x] Add the ability to read reviews
 - [ ] Add the ability to add number reviews when authenticated
 - [ ] Add the ability to add text reviews when authenticated
+- [ ] Add the ability to edit/delete your own reviews when authenticated
 - [x] Fix scrolling
 - [x] Make map performant
-- [ ] Add loading indicator
+- [ ] Add loading indicator for map
 - [ ] Move this to `<Review />` component
-- [ ] Add avatars to reviews
+- [x] Add avatars to reviews
+- [ ] Add avator to navbar
+- [ ] Calc distance from MapGL zoom level
 - [ ] Logout
+- [ ] Enable/Disabled things based on `process.env`
 
 ### Code Quality
 
 - [ ] !!! normalize store
 - [ ] Fix `.env` keys
 - [ ] Rewrite session/auth with proper logout and refresh
-- [ ] Fix warning is console
-- [ ] Add tests
+- [x] Fix warning is console
 - [ ] Add proper types
 - [ ] Organise styles
 - [x] Switch out mapbox-gl lib
 - [ ] Use more generic default values (example: geo)
+- [ ] Add tests
 
 ## Non-priority
 
 ### Features
 
 - [x] Add transition to map markers to make it look like it loads faster
-- [ ] Add loading indicator for the map
-- [ ] Calc distance from MapGL zoom level
 - [ ] Add `search for Place or location` functionality to map
 - [ ] Style marker on map
-- [ ] Add avatars
 
 ### Code Quality
 
@@ -71,9 +72,10 @@
 - testing
 - typescript
 - RxJs Store
-- WebUI
+- WebUI/CSS-in-JS
 - Mapbox
 - Auth/react-hook-form
+- custom layouts -> architecture case-study
 
 ## API
 
