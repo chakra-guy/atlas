@@ -31,9 +31,6 @@ export const fetchNearbyPlacesEpic = (_action$: Action$, store$: Store$) => {
       lng: map.geo.lng,
       distance: map.distance,
     })),
-    distinctUntilChanged((prev: Params, curr: Params) => {
-      return prev.lat === curr.lat && prev.lng === curr.lng && prev.distance === curr.distance
-    }),
     switchMap((params: Params) =>
       from(api.get("/places", params)).pipe(
         switchMap((res: any) => of(setPlaces(res.data))),

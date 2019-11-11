@@ -51,7 +51,7 @@
 
 - [ ] Go through fixmes/todos and add them here
 - [ ] Add proper error handling/error messages
-- [ ] formalize to `lng/lat`
+- [x] formalize to `lng/lat`
 - [ ] remove @default_place from PlaceController
 - [ ] better index/2 route for PlaceController
 - [ ] better type conversion for Places.list_places/1
