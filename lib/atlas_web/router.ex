@@ -17,12 +17,13 @@ defmodule AtlasWeb.Router do
     post "/logout", SessionController, :delete
 
     # resources "/sessions", SessionController, only: [:create, :delete]
+    resources "/places", PlaceController, except: [:new, :edit]
+    resources "/reviews", ReviewController
   end
 
   scope "/api", AtlasWeb do
     pipe_through [:api, :api_auth]
 
-    resources "/places", PlaceController, except: [:new, :edit]
-    resources "/reviews", ReviewController
+    # resources "/reviews", ReviewController
   end
 end

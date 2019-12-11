@@ -1,5 +1,6 @@
 import { OperatorFunction, Observable } from "rxjs"
 import { filter, catchError } from "rxjs/operators"
+
 import { ActionType, Action } from "../types"
 
 export function ofType<P>(...keys: ActionType[]): OperatorFunction<Action<any>, Action<P>> {

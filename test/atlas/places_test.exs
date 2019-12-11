@@ -9,7 +9,7 @@ defmodule Atlas.PlacesTest do
     @valid_attrs %{
       lat: 120.5,
       logo: "some logo",
-      lon: 120.5,
+      lng: 120.5,
       name: "some name",
       rating: 120.5,
       website: "some website"
@@ -17,12 +17,12 @@ defmodule Atlas.PlacesTest do
     @update_attrs %{
       lat: 456.7,
       logo: "some updated logo",
-      lon: 456.7,
+      lng: 456.7,
       name: "some updated name",
       rating: 456.7,
       website: "some updated website"
     }
-    @invalid_attrs %{lat: nil, logo: nil, lon: nil, name: nil, rating: nil, website: nil}
+    @invalid_attrs %{lat: nil, logo: nil, lng: nil, name: nil, rating: nil, website: nil}
 
     def place_fixture(attrs \\ %{}) do
       {:ok, place} =
@@ -47,7 +47,7 @@ defmodule Atlas.PlacesTest do
       assert {:ok, %Place{} = place} = Places.create_place(@valid_attrs)
       assert place.lat == 120.5
       assert place.logo == "some logo"
-      assert place.lon == 120.5
+      assert place.lng == 120.5
       assert place.name == "some name"
       assert place.rating == 120.5
       assert place.website == "some website"
@@ -62,7 +62,7 @@ defmodule Atlas.PlacesTest do
       assert {:ok, %Place{} = place} = Places.update_place(place, @update_attrs)
       assert place.lat == 456.7
       assert place.logo == "some updated logo"
-      assert place.lon == 456.7
+      assert place.lng == 456.7
       assert place.name == "some updated name"
       assert place.rating == 456.7
       assert place.website == "some updated website"

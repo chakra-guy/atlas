@@ -1,88 +1,67 @@
 import React, { useState } from "react"
-import ReactMapGL, {
-  Marker,
-  GeolocateControl,
-  ViewportChangeHandler,
-  ViewState,
-  Popup,
-} from "react-map-gl"
+import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 
-import { useDebouncedCallback } from "../hooks"
 import { Place } from "../types"
-import "./map.scss"
+import { useEventCallback } from "rxjs-hooks"
+import { debounceTime, tap, ignoreElements } from "rxjs/operators"
+import { dispatch } from "../action$"
+import { setGeo } from "../actions/map"
 
-const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
-
-const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
-  c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
-  C20.1,15.8,20.2,15.8,20.2,15.7z`
+const Mapbox = ReactMapboxGl({ accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || "" })
 
 type Props = {
-  places: Array<Place>
-  setCoordinatinates: (lat: number, lon: number) => void
+  places: Place[]
+  setSelectedPlaceID: (place_id: number | null) => void
 }
 
-export default function Map({ places, setCoordinatinates }: Props): JSX.Element {
-  const [popup, setPopup] = useState<any>({ open: false, place: {} })
-  const [viewport, setViewport] = useState<ViewState>({
-    latitude: 47.4979,
-    longitude: 19.05465,
-    zoom: 16,
+type mapboxType = {
+  center: [number, number]
+  zoom: [number]
+}
+
+export default function Map({ places, setSelectedPlaceID }: Props): JSX.Element {
+  const [mapbox] = useState<mapboxType>({
+    zoom: [16],
+    center: [19.05465, 47.4979],
   })
 
-  const updateCoordinatinates = useDebouncedCallback(setCoordinatinates, 250)
+  const [setCoordinatinates] = useEventCallback(geo$ =>
+    geo$.pipe(
+      debounceTime(250),
+      tap(geo => dispatch(setGeo(geo))),
+      ignoreElements(),
+    ),
+  )
 
-  const handleViewportChange: ViewportChangeHandler = viewState => {
-    setViewport(state => ({ ...state, ...viewState }))
-    updateCoordinatinates(viewState.latitude, viewState.longitude)
+  const handleHover = (cursor: string) => ({ map }: any) => {
+    map.getCanvas().style.cursor = cursor
+  }
+
+  const handleDrag = (map: any) => {
+    const { lng, lat } = map.getCenter()
+    setCoordinatinates({ lng, lat })
   }
 
   return (
-    <ReactMapGL
-      {...viewport}
-      mapboxApiAccessToken={MAPBOX_TOKEN}
-      mapStyle="mapbox://styles/mapbox/dark-v9"
-      onViewportChange={handleViewportChange}
-      width="100%"
-      height="100%"
+    <Mapbox
+      zoom={mapbox.zoom}
+      center={mapbox.center}
+      style="mapbox://styles/mapbox/streets-v9"
+      containerStyle={{ height: "100%", width: "100%" }}
+      onClick={() => setSelectedPlaceID(null)}
+      onDrag={handleDrag}
     >
-      {places.length > 0 &&
-        places.map(place => (
-          <Marker key={place.id} latitude={place.lat} longitude={place.lon}>
-            <svg
-              height={20}
-              viewBox="0 0 24 24"
-              className="marker"
-              onClick={() => setPopup({ open: true, place })}
-            >
-              <path d={ICON} />
-            </svg>
-          </Marker>
+      <Layer type="symbol" id="marker" layout={{ "icon-image": "circle-15" }}>
+        {places.map(place => (
+          <Feature
+            key={place.id}
+            coordinates={[place.lng, place.lat]}
+            onClick={() => setSelectedPlaceID(place.id)}
+            onMouseEnter={handleHover("pointer")}
+            onMouseLeave={handleHover("")}
+          />
         ))}
-
-      {popup.open && (
-        <Popup
-          latitude={popup.place.lat}
-          longitude={popup.place.lon}
-          closeButton
-          closeOnClick={false}
-          onClose={() => setPopup({ open: false, place: { lat: 0, lon: 0 } })}
-          anchor="bottom"
-          className="popup"
-        >
-          <img src={popup.place.logo} alt="company logo" />
-          <div className="popup-info">
-            <div>{popup.place.name}</div>
-            <div>{popup.place.rating}</div>
-          </div>
-        </Popup>
-      )}
-
-      <GeolocateControl
-        positionOptions={{ enableHighAccuracy: true }}
-        trackUserLocation
-        showUserLocation
-      />
-    </ReactMapGL>
+      </Layer>
+    </Mapbox>
   )
 }

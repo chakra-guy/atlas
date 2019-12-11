@@ -5,14 +5,14 @@ defmodule Atlas.Places.Place do
   alias Atlas.Places.Review
 
   schema "places" do
-    field :lat, :float
-    field :logo, :string
-    field :lon, :float
     field :name, :string
     field :rating, :float
+    field :logo, :string
     field :website, :string
+    field :lat, :float
+    field :lng, :float
 
-    # has_many :review, Review
+    has_many :review, Review
 
     timestamps()
   end
@@ -20,7 +20,7 @@ defmodule Atlas.Places.Place do
   @doc false
   def changeset(place, attrs) do
     place
-    |> cast(attrs, [:name, :rating, :logo, :website, :lat, :lon])
+    |> cast(attrs, [:name, :rating, :logo, :website, :lat, :lng])
     |> validate_required([:name])
   end
 end

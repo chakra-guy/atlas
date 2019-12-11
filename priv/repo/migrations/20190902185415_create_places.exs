@@ -8,10 +8,9 @@ defmodule Atlas.Repo.Migrations.CreatePlaces do
       add :logo, :string
       add :website, :string
       add :lat, :float
-      add :lon, :float
+      add :lng, :float
 
       timestamps()
     end
-
   end
 end

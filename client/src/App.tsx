@@ -1,44 +1,41 @@
-import React, { useState } from "react"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
+import React, { useEffect } from "react"
+import { Router, Switch, Route } from "react-router-dom"
+import { styled } from "baseui"
 
-import "./app.css"
-import Prototype from "./__prototype/Prototype"
-import { Mainpage, Login, Signup } from "./pages"
+import { Home, Login, Signup, Account } from "./pages"
+import { PrivateRoute, Navbar } from "./components"
+import history from "./history"
+import { dispatch } from "./action$"
+import { loginSuccess } from "./actions/session"
+
+const Container = styled("div", {
+  height: "100%",
+})
 
 export default function App(): JSX.Element {
-  const [isPrototype, setIsPrototype] = useState(true)
+  useEffect(() => {
+    try {
+      const auth = JSON.parse(localStorage.getItem("atlas-auth") || "")
+      if (auth) dispatch(loginSuccess(auth))
+    } catch (error) {
+      // ignore
+    }
+  }, [])
 
   return (
-    <Router>
-      <button type="button" onClick={() => setIsPrototype(state => !state)}>
-        Toggle App/Prototype
-      </button>
-
-      {isPrototype ? (
-        <Prototype />
-      ) : (
+    <Container>
+      <Router history={history}>
         <Switch>
-          <div>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/Login">Login</Link>
-              </li>
-              <li>
-                <Link to="/Signup">Signup</Link>
-              </li>
-            </ul>
+          <>
+            <Navbar />
 
-            <hr />
-
+            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/" component={Mainpage} />
-          </div>
+            <PrivateRoute path="/account" component={Account} />
+          </>
         </Switch>
-      )}
-    </Router>
+      </Router>
+    </Container>
   )
 }

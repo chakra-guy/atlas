@@ -2,7 +2,10 @@ defmodule AtlasWeb.SessionView do
   use AtlasWeb, :view
 
   def render("show.json", %{jwt: jwt, user: user}) do
-    %{jwt: jwt, username: user.username}
+    %{
+      data: render_one(user, AtlasWeb.UserView, "user.json"),
+      meta: %{token: jwt}
+    }
   end
 
   def render("error.json", _params) do

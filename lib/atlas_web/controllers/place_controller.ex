@@ -6,19 +6,9 @@ defmodule AtlasWeb.PlaceController do
 
   action_fallback AtlasWeb.FallbackController
 
-  @default_place %{
-    "lat" => "47.497903",
-    "lon" => "19.054647",
-    "distance" => "500"
-  }
-
-  def index(conn, %{"place" => place_params}) do
-    places =
-      case place_params do
-        nil -> Places.list_places(@default_place)
-        _ -> Places.list_places(place_params)
-      end
-
+  # FIXME check all error cases
+  def index(conn, %{"lat" => _, "lng" => _, "distance" => _} = place_params) do
+    places = Places.list_places(place_params)
     render(conn, "index.json", places: places)
   end
 
@@ -27,8 +17,8 @@ defmodule AtlasWeb.PlaceController do
     render(conn, "index.json", places: places)
   end
 
-  def create(conn, %{"place" => place_params}) do
-    with {:ok, %Place{} = place} <- Places.create_place(place_params) do
+  def create(conn, params) do
+    with {:ok, %Place{} = place} <- Places.create_place(params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.place_path(conn, :show, place))

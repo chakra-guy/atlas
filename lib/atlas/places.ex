@@ -5,13 +5,13 @@ defmodule Atlas.Places do
   alias Atlas.Places.Place
   alias Atlas.Places.Review
 
-  defmacro distance_between(a_lon, a_lat, b_lon, b_lat) do
+  defmacro distance_between(a_lng, a_lat, b_lng, b_lat) do
     quote do
       fragment(
         "ST_Distance_Sphere(ST_MakePoint(?,?), ST_MakePoint(?,?))",
-        unquote(a_lon),
+        unquote(a_lng),
         unquote(a_lat),
-        unquote(b_lon),
+        unquote(b_lng),
         unquote(b_lat)
       )
     end
@@ -20,14 +20,14 @@ defmodule Atlas.Places do
   # PLACES
 
   # Returns the list of places based on the geolocation and distance.
-  def list_places(%{"lat" => lat, "lon" => lon, "distance" => distance}) do
+  def list_places(%{"lat" => lat, "lng" => lng, "distance" => distance}) do
     safeLat = String.to_float(lat)
-    safeLon = String.to_float(lon)
+    safelng = String.to_float(lng)
     safeDis = String.to_integer(distance)
 
     Repo.all(
       from p in Place,
-        where: distance_between(p.lon, p.lat, ^safeLon, ^safeLat) <= ^safeDis
+        where: distance_between(p.lng, p.lat, ^safelng, ^safeLat) <= ^safeDis
     )
   end
 
@@ -73,7 +73,9 @@ defmodule Atlas.Places do
         where: u.id == ^user_id and p.id == ^place_id,
         select: r
 
-    Repo.all(query)
+    query
+    |> Repo.all()
+    |> Repo.preload([:user])
   end
 
   def list_reviews_by_place(place_id) do
