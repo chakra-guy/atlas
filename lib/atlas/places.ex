@@ -1,7 +1,7 @@
 defmodule Atlas.Places do
   import Ecto.Query, warn: false
+  
   alias Atlas.Repo
-
   alias Atlas.Places.Place
   alias Atlas.Places.Review
 

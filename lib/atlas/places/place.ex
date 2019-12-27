@@ -11,6 +11,7 @@ defmodule Atlas.Places.Place do
     field :website, :string
     field :lat, :float
     field :lng, :float
+    field :geohash, :string
 
     has_many :review, Review
 
@@ -20,7 +21,7 @@ defmodule Atlas.Places.Place do
   @doc false
   def changeset(place, attrs) do
     place
-    |> cast(attrs, [:name, :rating, :logo, :website, :lat, :lng])
+    |> cast(attrs, [:name, :rating, :logo, :website, :lat, :lng, :geohash])
     |> validate_required([:name])
   end
 end
