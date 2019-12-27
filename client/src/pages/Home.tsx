@@ -40,7 +40,7 @@ const view$ = store$.pipe(
 )
 
 const initialValues = {
-  distance: 750,
+  distance: 250,
   places: [],
 }
 

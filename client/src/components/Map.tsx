@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
+import { debounceTime, tap, ignoreElements } from "rxjs/operators"
+import { useEventCallback } from "rxjs-hooks"
 
 import { Place } from "../types"
-import { useEventCallback } from "rxjs-hooks"
-import { debounceTime, tap, ignoreElements } from "rxjs/operators"
 import { dispatch } from "../action$"
 import { setGeo } from "../actions/map"
 
@@ -25,7 +25,7 @@ export default function Map({ places, setSelectedPlaceID }: Props): JSX.Element 
     center: [19.05465, 47.4979],
   })
 
-  const [setCoordinatinates] = useEventCallback(geo$ =>
+  const [setCoordinates] = useEventCallback(geo$ =>
     geo$.pipe(
       debounceTime(250),
       tap(geo => dispatch(setGeo(geo))),
@@ -39,7 +39,7 @@ export default function Map({ places, setSelectedPlaceID }: Props): JSX.Element 
 
   const handleDrag = (map: any) => {
     const { lng, lat } = map.getCenter()
-    setCoordinatinates({ lng, lat })
+    setCoordinates({ lng, lat })
   }
 
   return (

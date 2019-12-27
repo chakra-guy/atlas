@@ -8,7 +8,7 @@ defmodule Atlas.Places do
   defmacro distance_between(a_lng, a_lat, b_lng, b_lat) do
     quote do
       fragment(
-        "ST_Distance_Sphere(ST_MakePoint(?,?), ST_MakePoint(?,?))",
+        "ST_Distance(ST_MakePoint(?,?), ST_MakePoint(?,?), true)",
         unquote(a_lng),
         unquote(a_lat),
         unquote(b_lng),
@@ -20,9 +20,9 @@ defmodule Atlas.Places do
   # PLACES
 
   # Returns the list of places based on the geolocation and distance.
-  def list_places(%{"lat" => lat, "lng" => lng, "distance" => distance}) do
-    safeLat = String.to_float(lat)
+  def list_places(%{"lng" => lng, "lat" => lat, "distance" => distance}) do
     safelng = String.to_float(lng)
+    safeLat = String.to_float(lat)
     safeDis = String.to_integer(distance)
 
     Repo.all(

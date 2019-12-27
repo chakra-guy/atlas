@@ -2,7 +2,7 @@ import { Action, mapState } from "../types"
 
 const initialState = {
   geo: { lng: 19.054647, lat: 47.497903 },
-  distance: 750,
+  distance: 250,
 }
 
 export const mapReducer = (state: mapState = initialState, action: Action<any>) => {
