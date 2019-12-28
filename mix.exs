@@ -45,7 +45,8 @@ defmodule Atlas.MixProject do
       {:cors_plug, "~> 2.0"},
       {:pbkdf2_elixir, "~> 1.0"},
       {:guardian, "~> 2.0"},
-      {:geohash, "~> 1.0"}
+      {:geohash, "~> 1.0", only: [:dev]},
+      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false}
     ]
   end
 

@@ -4,8 +4,8 @@ defmodule AtlasWeb.UserController do
   alias Atlas.Accounts
   alias Atlas.Accounts.User
 
-  alias AtlasWeb.SessionView
   alias AtlasWeb.Guardian
+  alias AtlasWeb.SessionView
 
   action_fallback AtlasWeb.FallbackController
 

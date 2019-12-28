@@ -1,9 +1,9 @@
 defmodule Atlas.Places do
   import Ecto.Query, warn: false
-  
-  alias Atlas.Repo
+
   alias Atlas.Places.Place
   alias Atlas.Places.Review
+  alias Atlas.Repo
 
   defmacro distance_between(a_lng, a_lat, b_lng, b_lat) do
     quote do
@@ -21,13 +21,13 @@ defmodule Atlas.Places do
 
   # Returns the list of places based on the geolocation and distance.
   def list_places(%{"lng" => lng, "lat" => lat, "distance" => distance}) do
-    safelng = String.to_float(lng)
-    safeLat = String.to_float(lat)
-    safeDis = String.to_integer(distance)
+    safe_lng = String.to_float(lng)
+    safe_lat = String.to_float(lat)
+    safe_dis = String.to_integer(distance)
 
     Repo.all(
       from p in Place,
-        where: distance_between(p.lng, p.lat, ^safelng, ^safeLat) <= ^safeDis
+        where: distance_between(p.lng, p.lat, ^safe_lng, ^safe_lat) <= ^safe_dis
     )
   end
 
