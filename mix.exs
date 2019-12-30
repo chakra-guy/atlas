@@ -20,7 +20,7 @@ defmodule Atlas.MixProject do
   def application do
     [
       mod: {Atlas.Application, []},
-      extra_applications: [:guardian, :geohash, :logger, :runtime_tools,]
+      extra_applications: [:guardian, :geohash, :logger, :runtime_tools]
     ]
   end
 
@@ -45,7 +45,7 @@ defmodule Atlas.MixProject do
       {:cors_plug, "~> 2.0"},
       {:pbkdf2_elixir, "~> 1.0"},
       {:guardian, "~> 2.0"},
-      {:geohash, "~> 1.0", only: [:dev]},
+      {:geohash, "~> 1.0"},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false}
     ]
   end

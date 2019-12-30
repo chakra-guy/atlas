@@ -64,6 +64,8 @@
 - [ ] add `has_many :review, Review` ?
 - [ ] compose list_reviews_by_user/place queries
 - [ ] add signup/login/logout/refresh for session
+- [ ] add SSL
+- [ ] Use prod.secret.exs and environment variables properly
 
 # For youtube
 

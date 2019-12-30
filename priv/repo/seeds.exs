@@ -19,11 +19,11 @@ headers = [:name, :rating, :logo, :website, :lat, :lng]
 |> File.stream!()
 |> Stream.drop(1)
 |> CSV.decode!(headers: headers)
-|> Enum.each(fn attrs -> 
+|> Enum.each(fn attrs ->
   lat = String.to_float(attrs.lat)
   lng = String.to_float(attrs.lng)
 
   attrs
   |> Map.put(:geohash, Geohash.encode(lat, lng))
-  |> Places.create_place() 
+  |> Places.create_place()
 end)

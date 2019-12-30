@@ -1,0 +1,26 @@
+version: "3"
+services:
+  api:
+    build: .
+    command: bash -c 'mix ecto.setup && mix phx.server'
+    volumes:
+      - .:/opt/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: kartoza/postgis
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: atlas_prod
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
