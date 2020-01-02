@@ -1,6 +1,6 @@
-name: Run unit-tests for React App
+name: Test Client
 
-on: [pull_request]
+on: [push]
 
 jobs:
   test:
