@@ -31,6 +31,11 @@
 - [ ] Use more generic default values (example: geo)
 - [ ] Add tests
 
+#### Other
+
+- [ ] Add github actions for unit-testing react app
+- [ ] Add github actions for unit-testing elixir api
+
 ## Non-priority
 
 ### Features
