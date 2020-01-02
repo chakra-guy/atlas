@@ -1,0 +1,12 @@
+_build/
+.elixir_ls/
+client/
+deps/
+.git/
+.gitignore
+Dockerfile
+Makefile
+README*
+test/
+priv/static/
+todo.md
