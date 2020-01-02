@@ -1,10 +1,9 @@
 import React, { useEffect } from "react"
-import { Router, Switch, Route } from "react-router-dom"
+import { Switch, Route } from "react-router-dom"
 import { styled } from "baseui"
 
 import { Home, Login, Signup, Account } from "./pages"
 import { PrivateRoute, Navbar } from "./components"
-import history from "./history"
 import { dispatch } from "./action$"
 import { loginSuccess } from "./actions/session"
 
@@ -24,18 +23,13 @@ export default function App(): JSX.Element {
 
   return (
     <Container>
-      <Router history={history}>
-        <Switch>
-          <>
-            <Navbar />
-
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <PrivateRoute path="/account" component={Account} />
-          </>
-        </Switch>
-      </Router>
+      <Navbar />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <PrivateRoute path="/account" component={Account} />
+      </Switch>
     </Container>
   )
 }

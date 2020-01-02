@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-
+import { Router } from "react-router-dom"
 import { Client as Styletron } from "styletron-engine-atomic"
 import { Provider as StyletronProvider } from "styletron-react"
 import { LightTheme, BaseProvider } from "baseui"
@@ -8,6 +8,7 @@ import { LightTheme, BaseProvider } from "baseui"
 import "./index.css"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
+import history from "./history"
 import store$ from "./store$"
 import action$ from "./action$"
 import runEpics from "./epics"
@@ -17,11 +18,13 @@ const engine = new Styletron()
 runEpics(action$, store$)
 
 ReactDOM.render(
-  <StyletronProvider value={engine}>
-    <BaseProvider theme={LightTheme}>
-      <App />
-    </BaseProvider>
-  </StyletronProvider>,
+  <Router history={history}>
+    <StyletronProvider value={engine}>
+      <BaseProvider theme={LightTheme}>
+        <App />
+      </BaseProvider>
+    </StyletronProvider>
+  </Router>,
   document.getElementById("root"),
 )
 
