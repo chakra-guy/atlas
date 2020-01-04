@@ -1,6 +1,11 @@
 name: Frontend Unit-tests
 
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "client/**"
 
 jobs:
   test:

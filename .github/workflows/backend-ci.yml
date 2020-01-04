@@ -1,6 +1,11 @@
 name: Backend Unit-tests
 
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "!client/**"
 
 jobs:
   test:
@@ -28,5 +33,4 @@ jobs:
           otp-version: 22.x
           elixir-version: 1.9.x
       - run: mix deps.get
-      - run: mix compile
       - run: mix test
