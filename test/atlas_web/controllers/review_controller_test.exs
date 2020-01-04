@@ -26,6 +26,7 @@ defmodule AtlasWeb.ReviewControllerTest do
   end
 
   describe "index" do
+    @tag :skip
     test "lists all reviews", %{conn: conn} do
       conn = get(conn, Routes.review_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
@@ -33,6 +34,7 @@ defmodule AtlasWeb.ReviewControllerTest do
   end
 
   describe "create review" do
+    @tag :skip
     test "renders review when data is valid", %{conn: conn} do
       conn = post(conn, Routes.review_path(conn, :create), review: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
@@ -47,6 +49,7 @@ defmodule AtlasWeb.ReviewControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
+    @tag :skip
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.review_path(conn, :create), review: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
@@ -56,6 +59,7 @@ defmodule AtlasWeb.ReviewControllerTest do
   describe "update review" do
     setup [:create_review]
 
+    @tag :skip
     test "renders review when data is valid", %{conn: conn, review: %Review{id: id} = review} do
       conn = put(conn, Routes.review_path(conn, :update, review), review: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
@@ -70,6 +74,7 @@ defmodule AtlasWeb.ReviewControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
+    @tag :skip
     test "renders errors when data is invalid", %{conn: conn, review: review} do
       conn = put(conn, Routes.review_path(conn, :update, review), review: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
@@ -79,6 +84,7 @@ defmodule AtlasWeb.ReviewControllerTest do
   describe "delete review" do
     setup [:create_review]
 
+    @tag :skip
     test "deletes chosen review", %{conn: conn, review: review} do
       conn = delete(conn, Routes.review_path(conn, :delete, review))
       assert response(conn, 204)

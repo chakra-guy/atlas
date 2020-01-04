@@ -1,0 +1,36 @@
+name: Backend Unit-tests
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - "client/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: kartoza/postgis
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: atlas_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - uses: actions/setup-elixir@v1.1.0
+        with:
+          otp-version: 22.x
+          elixir-version: 1.9.x
+      - run: mix deps.get
+      - run: mix test

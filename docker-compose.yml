@@ -1,6 +1,7 @@
 version: "3"
 services:
   api:
+    container_name: api
     build: .
     command: bash -c 'mix ecto.setup && mix phx.server'
     volumes:
@@ -9,14 +10,21 @@ services:
       - "4000:4000"
     depends_on:
       - postgres
+        # - condition: service_healthy
 
   postgres:
+    container_name: postgres
     image: kartoza/postgis
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: atlas_prod
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U postgres"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
     ports:
       - 5432:5432
     volumes:
