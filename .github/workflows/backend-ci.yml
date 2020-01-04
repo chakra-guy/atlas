@@ -1,4 +1,4 @@
-name: Unit-test API
+name: Backend Unit-tests
 
 on: pull_request
 

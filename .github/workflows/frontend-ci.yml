@@ -1,10 +1,11 @@
-name: Unit-tests for React App
+name: Frontend Unit-tests
 
-on: [pull_request]
+on: pull_request
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v1
