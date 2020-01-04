@@ -9,7 +9,7 @@ jobs:
     services:
       db:
         image: kartoza/postgis
-        environment:
+        env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: atlas_test
