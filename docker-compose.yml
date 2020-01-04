@@ -1,6 +1,7 @@
 version: "3"
 services:
   api:
+    container_name: api
     build: .
     command: bash -c 'mix ecto.setup && mix phx.server'
     volumes:
@@ -11,6 +12,7 @@ services:
       - postgres
 
   postgres:
+    container_name: postgres
     image: kartoza/postgis
     restart: always
     environment:
