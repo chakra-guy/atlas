@@ -32,7 +32,7 @@ defmodule Atlas.AccountsTest do
       assert Accounts.get_user!(user.id) == user
     end
 
-    # @tag :skip
+    @tag :skip
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
       assert user.password_hash == "some password_hash"
