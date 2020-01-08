@@ -21,7 +21,8 @@ COPY --from=phx-builder /opt/app/priv /opt/app/priv
 COPY --from=phx-builder /opt/app/config /opt/app/config
 COPY --from=phx-builder /opt/app/lib /opt/app/lib
 COPY --from=phx-builder /opt/app/deps /opt/app/deps
-# COPY --from=phx-builder /opt/app/.mix /opt/app/.mix
 COPY --from=phx-builder /opt/app/mix.* /opt/app/
 
 USER default
+
+CMD ["mix", "do", "ecto.setup,", "phx.server"]
